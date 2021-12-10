@@ -1,0 +1,9 @@
+Menu_Start;New Game
+Menu_Continue;Continue
+Menu_Options;Options
+Menu_Credits;Credits
+Menu_Exit;Exit
+Menu_Copyright;Copyright ArthemyDevelopment 2021
+Options_Audio;Audio Options
+Options_Graphic;Video Options
+Options_Lang;Language Selection
