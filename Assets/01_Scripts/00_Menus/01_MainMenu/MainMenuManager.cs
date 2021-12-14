@@ -21,6 +21,7 @@ public class MainMenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         OMM = OptionMenuManager.current;
         Debug.Log(SaveData.SaveFileExist);
         G_ContinueButton.SetActive(SaveData.SaveFileExist);

@@ -6,18 +6,13 @@ Menu_Exit;Salir
 Menu_Copyright;Copyright ArthemyDevelopment 2021
 Options_Audio;Opciones de Audio
 Options_Graphic;Opciones de Video
-Options_Lang;Selección de Idioma
+Options_Lang;Selecci�n de Idioma
 Options_MasterVol;General
 Options_MusicVol;Musica
 Options_SoundVol;Sonidos
-Options_QualityText;Calidad Grafica
 Options_QualityVL;Muy Bajo
 Options_QualityL;Bajo
 Options_QualityM;Medio
 Options_QualityH;Alto
 Options_QualityVH;Muy Alto
-Options_ScreenText;Tipo de ventana
-Options_ScreenW;Ventana
-Options_ScreenFW;Ventana sin bordes
-Options_ScreenF;Pantalla completa
 Save_Level;Nivel
