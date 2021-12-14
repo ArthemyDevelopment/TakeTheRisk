@@ -7,4 +7,7 @@ Menu_Copyright;Copyright ArthemyDevelopment 2021
 Options_Audio;Opciones de Audio
 Options_Graphic;Opciones de Video
 Options_Lang;Selecci�n de Idioma
+Options_MasterVol;General
+Options_MusicVol;Musica
+Options_SoundVol;Sonidos
 Save_Level;Nivel
