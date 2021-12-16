@@ -88,7 +88,7 @@ Material:
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Clipped: 0
+    - _Clipped: 1
     - _ColBright: 0
     - _ColIntense: 1
     - _Cull: 2
