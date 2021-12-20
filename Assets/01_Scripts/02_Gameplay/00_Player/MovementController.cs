@@ -38,10 +38,10 @@ public class MovementController : MonoBehaviour
         InputManager.Player.Movement.canceled += Move;
         InputManager.Player.Movement.canceled += CameraStopMove;
 
-        InputManager.Player.Shooting.started += PlayerManager.current.StartShooting;
+        //InputManager.Player.Shooting.started += PlayerManager.current.StartShooting;
         InputManager.Player.Shooting.performed += Rotate;
         InputManager.Player.Shooting.performed += PlayerManager.current.ShootAngle;
-        InputManager.Player.Shooting.canceled += PlayerManager.current.EndShooting;
+        //InputManager.Player.Shooting.canceled += PlayerManager.current.EndShooting;
     }
 
     void Move(InputAction.CallbackContext call)

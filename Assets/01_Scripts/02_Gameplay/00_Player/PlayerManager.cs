@@ -75,7 +75,7 @@ public class PlayerManager : MonoBehaviour
             B_CanShoot = false;
             GameObject Gtemp = GetBullet();
             Gtemp.transform.position = T_ShootingPoint.position;
-            Gtemp.transform.rotation = Quaternion.Euler(0,F_ShootAngle,0);
+            Gtemp.transform.rotation = Quaternion.Euler(0,-F_ShootAngle,0);
             Gtemp.SetActive(true);
             StartCoroutine(ShootDelay());
         }
@@ -108,8 +108,12 @@ public class PlayerManager : MonoBehaviour
         Vector2 temp = call.ReadValue<Vector2>();
         if (temp.magnitude > 0.1f)
         {
+            B_IsShooting = true;
             F_ShootAngle = Mathf.Atan2(temp.y, temp.x) * Mathf.Rad2Deg;
         }
+        else
+            B_IsShooting = false;
+        
     }
 
     GameObject GetBullet()
@@ -121,7 +125,7 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    void StoreBullet(GameObject g)
+    public void StoreBullet(GameObject g)
     {
         g.SetActive(false);
         Q_BulletPool.Enqueue(g);

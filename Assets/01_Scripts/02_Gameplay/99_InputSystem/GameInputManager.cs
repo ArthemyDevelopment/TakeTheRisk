@@ -41,8 +41,8 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""aeb3eeaf-412b-42d3-a660-372825f3f967"",
                     ""expectedControlType"": ""Vector2"",
-                    ""processors"": ""StickDeadzone"",
-                    ""interactions"": ""Hold(duration=0.1,pressPoint=0.1)"",
+                    ""processors"": """",
+                    ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
@@ -88,7 +88,7 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                     ""id"": ""8f972544-c387-4336-8e45-b7dc19de47b5"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""StickDeadzone(max=1)"",
                     ""groups"": ""GamePad"",
                     ""action"": ""Shooting"",
                     ""isComposite"": false,
