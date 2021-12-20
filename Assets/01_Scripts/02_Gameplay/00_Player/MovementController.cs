@@ -14,13 +14,11 @@ public class MovementController : MonoBehaviour
     [SerializeField] private int I_VcamMove;
     [SerializeField] private float F_Velocity;
     [SerializeField] private float F_RotationSmoothing;
+    
     private Vector3 V3_Movement;
     private float F_LookAngle;
     private Rigidbody Rb_PlayerRigidBody;
     private Transform T_PlayerTransform;
-    
-    
-    
 
     private GameInputManager InputManager;
 
@@ -40,9 +38,10 @@ public class MovementController : MonoBehaviour
         InputManager.Player.Movement.canceled += Move;
         InputManager.Player.Movement.canceled += CameraStopMove;
 
-        //InputManager.Player.Shooting.started += Rotate;
+        InputManager.Player.Shooting.started += PlayerManager.current.StartShooting;
         InputManager.Player.Shooting.performed += Rotate;
-        //InputManager.Player.Shooting.canceled += Rotate;
+        InputManager.Player.Shooting.performed += PlayerManager.current.ShootAngle;
+        InputManager.Player.Shooting.canceled += PlayerManager.current.EndShooting;
     }
 
     void Move(InputAction.CallbackContext call)

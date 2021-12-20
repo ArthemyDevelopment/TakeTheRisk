@@ -42,7 +42,7 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                     ""id"": ""aeb3eeaf-412b-42d3-a660-372825f3f967"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": ""StickDeadzone"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold(duration=0.1,pressPoint=0.1)"",
                     ""initialStateCheck"": true
                 },
                 {
