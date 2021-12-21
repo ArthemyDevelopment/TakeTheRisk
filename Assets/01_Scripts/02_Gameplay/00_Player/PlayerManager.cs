@@ -101,8 +101,6 @@ public class PlayerManager : MonoBehaviour
     #endregion
     
     #region Shooting
-    public void StartShooting(InputAction.CallbackContext call) { B_IsShooting = true; }
-    public void EndShooting(InputAction.CallbackContext call) { B_IsShooting = false; }
     public void ShootAngle(InputAction.CallbackContext call)
     {
         Vector2 temp = call.ReadValue<Vector2>();
