@@ -21,3 +21,11 @@ Options_ScreenW;Ventana
 Options_ScreenFW;Ventana sin bordes
 Options_ScreenF;Pantalla completa
 Save_Level;Nivel
+Upgrd_MaxHealth;Vida Maxima
+Upgrd_Heals;Curación
+Upgrd_SelfDmg;Reducción Vida
+Upgrd_BaseDmg;Daño Base
+Upgrd_DmgScale;Escalado de Daño
+Upgrd_NumHeals;Numero de Curaciones
+Upgrd_Parry;Desvio
+Upgrd_CDParry;Enfriamiento Desvio

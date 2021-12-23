@@ -14,6 +14,7 @@ public class PlayerManager : MonoBehaviour
 
     
     //----------------------PLAYER STATS----------------------------//
+    [FoldoutGroup("Player Stats")] public int I_PuntosMejoras;
     [FoldoutGroup("Player Stats"),Title("Health", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Player Stats")]public int I_MaxHealth;
     [FoldoutGroup("Player Stats")]public int I_ActHealth;
