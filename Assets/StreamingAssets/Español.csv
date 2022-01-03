@@ -32,3 +32,21 @@ Upgrd_CDParry;Enfriamiento Desvio
 Upgrd_ActLv;Nivel
 Upgrd_Points;Puntos
 Upgrd_Cost;Costo nuevo nivel
+Stat_Health;Vida
+Stat_HealthDesc;Vida actual y maxima de la nave
+Stat_Heal;Curas
+Stat_HealDesc;Cantidad de curaciones disponibles y cuantas se pueden llevar
+Stat_Healling;Curación
+Stat_HeallingDesc;Cantidad de vida que otorga cada cura
+Stat_SelfDmg;Auto Daño
+Stat_SelfDmgDesc;Cantidad de vida que se pierde al usar el auto daño
+Stat_BaseDmg;Daño Base
+Stat_BaseDmgDesc;Daño base de la nave previo al aumento de arma y escalado por daño
+Stat_DmgScale;Escalado de daño
+Stat_DmgScaleDesc;Cantidad de vida faltante que se convierte en daño
+Stat_ActDmg;Daño Actual
+Stat_ActDmgDesc;Daño de la nave despues de sumar el daño de armas y el escalado de daño
+Stat_CDParry;Enfriamiento desvío
+Stat_CDParryDesc;Segundos que el desvio permanece en enfriamiento
+Stat_Parry;Duración desvío
+Stat_ParryDesc;Segundos que dura el beneficio de un desvio exitoso
