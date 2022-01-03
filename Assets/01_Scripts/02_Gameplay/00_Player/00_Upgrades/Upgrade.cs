@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[DefaultExecutionOrder(1)]
 public class Upgrade : MonoBehaviour
 {
     enum TypeOfUpgrade
@@ -19,8 +20,6 @@ public class Upgrade : MonoBehaviour
     [SerializeField]private TypeOfUpgrade type_Upgrade;
     [SerializeField]private int I_ActLv;
     [SerializeField]private float F_RatioMejora;
-    [SerializeField]private int I_Coste;
-    [SerializeField]private int I_AumentoCoste;
     [SerializeField]private Button B_BotonMejora;
     [SerializeField]private TMP_Text Tx_Lv;
 
@@ -30,27 +29,63 @@ public class Upgrade : MonoBehaviour
         UpdateInfo();
     }
 
-    void UpdateInfo()
+    public void UpdateInfo()
     {
         B_BotonMejora.interactable = CanUpgrade();
         Tx_Lv.text = I_ActLv.ToString();
-        I_Coste = I_Coste + (I_AumentoCoste * I_ActLv);
     }
+    
     
     bool CanUpgrade()
     {
-        return I_Coste <= PlayerManager.current.I_PuntosMejoras;
+        return UpgradesSystem.current.I_Coste <= UpgradesSystem.current.I_PuntosMejora;
     }
 
     public float UpgradeStat(float f)
     {
-        return f;
+        float temp = 0;
+        switch (type_Upgrade)
+        {
+            case TypeOfUpgrade.sum:
+                temp = (f + F_RatioMejora);
+                break;
+            
+            case TypeOfUpgrade.rest:
+                temp = (f - F_RatioMejora);
+                break;
+            
+            case TypeOfUpgrade.mult:
+                temp = (f * F_RatioMejora);
+                break;
+        }
+        I_ActLv++;
+        return temp;
+
     }
 
     public int UpgradeStat(int i)
     {
-        return i;
+        int temp = 0;
+        switch (type_Upgrade)
+        {
+            case TypeOfUpgrade.sum:
+                temp = (int)(i + F_RatioMejora);
+                break;
+            
+            case TypeOfUpgrade.rest:
+                temp = (int)(i - F_RatioMejora);
+                break;
+            
+            case TypeOfUpgrade.mult:
+                temp = (int)(i * F_RatioMejora);
+                break;
+        }
+        I_ActLv++;
+
+        return temp;
     }
+
+
     
     
     

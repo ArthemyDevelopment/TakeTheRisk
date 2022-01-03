@@ -73,9 +73,18 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Menu"",
+                    ""name"": ""PauseMenu"",
                     ""type"": ""Button"",
                     ""id"": ""02e02343-43d5-462d-badd-48bdc44951d8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UpgradeMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""a850934f-2f3c-41bc-afd3-d44a581e0fc0"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -184,12 +193,23 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""2bec5ab5-dd70-4585-bb10-758f2cc87a3f"",
-                    ""path"": """",
+                    ""id"": ""68509dd6-b88d-487c-a770-6253e4b3af3d"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Menu"",
+                    ""action"": ""PauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e9dfeebd-e503-40ac-a1c1-564e558cb451"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""PauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -258,6 +278,28 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fc30e9fd-ae6a-4a8e-badc-c8bd4f230625"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""UpgradeMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4726a67e-1c84-49bd-8b0d-e60dac75aabe"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""UpgradeMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -294,7 +336,8 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
         m_Player_Healing = m_Player.FindAction("Healing", throwIfNotFound: true);
         m_Player_Parry = m_Player.FindAction("Parry", throwIfNotFound: true);
         m_Player_SelfDamage = m_Player.FindAction("SelfDamage", throwIfNotFound: true);
-        m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
+        m_Player_PauseMenu = m_Player.FindAction("PauseMenu", throwIfNotFound: true);
+        m_Player_UpgradeMenu = m_Player.FindAction("UpgradeMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -359,7 +402,8 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Healing;
     private readonly InputAction m_Player_Parry;
     private readonly InputAction m_Player_SelfDamage;
-    private readonly InputAction m_Player_Menu;
+    private readonly InputAction m_Player_PauseMenu;
+    private readonly InputAction m_Player_UpgradeMenu;
     public struct PlayerActions
     {
         private @GameInputManager m_Wrapper;
@@ -369,7 +413,8 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
         public InputAction @Healing => m_Wrapper.m_Player_Healing;
         public InputAction @Parry => m_Wrapper.m_Player_Parry;
         public InputAction @SelfDamage => m_Wrapper.m_Player_SelfDamage;
-        public InputAction @Menu => m_Wrapper.m_Player_Menu;
+        public InputAction @PauseMenu => m_Wrapper.m_Player_PauseMenu;
+        public InputAction @UpgradeMenu => m_Wrapper.m_Player_UpgradeMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -394,9 +439,12 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                 @SelfDamage.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelfDamage;
                 @SelfDamage.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelfDamage;
                 @SelfDamage.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelfDamage;
-                @Menu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
-                @Menu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
-                @Menu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
+                @PauseMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseMenu;
+                @PauseMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseMenu;
+                @PauseMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseMenu;
+                @UpgradeMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpgradeMenu;
+                @UpgradeMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpgradeMenu;
+                @UpgradeMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpgradeMenu;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -416,9 +464,12 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                 @SelfDamage.started += instance.OnSelfDamage;
                 @SelfDamage.performed += instance.OnSelfDamage;
                 @SelfDamage.canceled += instance.OnSelfDamage;
-                @Menu.started += instance.OnMenu;
-                @Menu.performed += instance.OnMenu;
-                @Menu.canceled += instance.OnMenu;
+                @PauseMenu.started += instance.OnPauseMenu;
+                @PauseMenu.performed += instance.OnPauseMenu;
+                @PauseMenu.canceled += instance.OnPauseMenu;
+                @UpgradeMenu.started += instance.OnUpgradeMenu;
+                @UpgradeMenu.performed += instance.OnUpgradeMenu;
+                @UpgradeMenu.canceled += instance.OnUpgradeMenu;
             }
         }
     }
@@ -448,6 +499,7 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
         void OnHealing(InputAction.CallbackContext context);
         void OnParry(InputAction.CallbackContext context);
         void OnSelfDamage(InputAction.CallbackContext context);
-        void OnMenu(InputAction.CallbackContext context);
+        void OnPauseMenu(InputAction.CallbackContext context);
+        void OnUpgradeMenu(InputAction.CallbackContext context);
     }
 }

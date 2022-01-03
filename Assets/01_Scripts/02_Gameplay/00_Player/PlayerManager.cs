@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
 
+[DefaultExecutionOrder(0)]
 public class PlayerManager : MonoBehaviour
 {
 
@@ -14,7 +15,6 @@ public class PlayerManager : MonoBehaviour
 
     
     //----------------------PLAYER STATS----------------------------//
-    [FoldoutGroup("Player Stats")] public int I_PuntosMejoras;
     [FoldoutGroup("Player Stats"),Title("Health", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Player Stats")]public int I_MaxHealth;
     [FoldoutGroup("Player Stats")]public int I_ActHealth;
@@ -63,6 +63,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
+        InputController.current.InputManager.Player.Shooting.performed += ShootAngle;
         I_ActHealth = I_MaxHealth;
         I_ActDamage = SetDamage();
         SetPool();

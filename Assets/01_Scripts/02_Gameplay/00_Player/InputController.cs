@@ -7,8 +7,11 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 
 
-public class MovementController : MonoBehaviour
+public class InputController : MonoBehaviour
 {
+
+    public static InputController current;
+    
     [SerializeField] private CinemachineVirtualCamera VCam;
     [SerializeField] private int I_VcamDefaul;
     [SerializeField] private int I_VcamMove;
@@ -20,10 +23,20 @@ public class MovementController : MonoBehaviour
     private Rigidbody Rb_PlayerRigidBody;
     private Transform T_PlayerTransform;
 
-    private GameInputManager InputManager;
+    public GameInputManager InputManager;
 
 
-    private void Start()
+    private void Awake()
+    {
+        if (current == null)
+            current = this;
+        else if (current != this)
+            Destroy(this);
+
+
+    }
+
+    private void OnEnable()
     {
         Application.targetFrameRate = 60;
         InputManager = new GameInputManager();
@@ -40,7 +53,6 @@ public class MovementController : MonoBehaviour
 
 
         InputManager.Player.Shooting.performed += Rotate;
-        InputManager.Player.Shooting.performed += PlayerManager.current.ShootAngle;
 
     }
 

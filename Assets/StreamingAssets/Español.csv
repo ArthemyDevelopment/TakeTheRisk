@@ -29,3 +29,6 @@ Upgrd_DmgScale;Escalado de Daño
 Upgrd_NumHeals;Numero de Curaciones
 Upgrd_Parry;Desvio
 Upgrd_CDParry;Enfriamiento Desvio
+Upgrd_ActLv;Nivel
+Upgrd_Points;Puntos
+Upgrd_Cost;Costo nuevo nivel
