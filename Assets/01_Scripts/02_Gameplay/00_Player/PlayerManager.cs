@@ -24,10 +24,12 @@ public class PlayerManager : MonoBehaviour
     [FoldoutGroup("Player Stats"), ReadOnly]public int I_ActDamage;
     [FoldoutGroup("Player Stats"),Title("Heal", titleAlignment: TitleAlignments.Centered)] 
     [FoldoutGroup("Player Stats")]public int I_Healling;
-    [FoldoutGroup("Player Stats")]public int I_HealUse;
+    [FoldoutGroup("Player Stats")]public int I_ActHeals;
+    [FoldoutGroup("Player Stats")]public int I_MaxHeals;
     [FoldoutGroup("Player Stats"),ShowInInspector, ReadOnly]private bool B_CanHeal = true;
     [FoldoutGroup("Player Stats"),Title("Parry", titleAlignment: TitleAlignments.Centered)] 
     [FoldoutGroup("Player Stats")]public float F_ParryTime;
+    [FoldoutGroup("Player Stats")]public float F_ParryDuration;
     [FoldoutGroup("Player Stats")]public float F_ParryCD;
     [FoldoutGroup("Player Stats"),ShowInInspector, ReadOnly]private bool B_CanParry = true;
     [FoldoutGroup("Player Stats"), Title("Self Damage", titleAlignment: TitleAlignments.Centered)]

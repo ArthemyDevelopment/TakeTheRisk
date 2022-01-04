@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 28028653}
   - component: {fileID: 28028652}
   m_Layer: 5
-  m_Name: LvValue
+  m_Name: BaseDmgValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -598,8 +598,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3341205, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.769989, y: -0.000091552734}
-  m_SizeDelta: {x: 1.539978, y: 0.0002002716}
+  m_AnchoredPosition: {x: 1.7449036, y: -0.000091552734}
+  m_SizeDelta: {x: -3.4897, y: 0.0002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &66897201
 MonoBehaviour:
@@ -1748,7 +1748,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.777193, y: 1}
+    m_SensorSize: {x: 1.7775832, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1856,7 +1856,7 @@ GameObject:
   - component: {fileID: 461670391}
   - component: {fileID: 461670390}
   m_Layer: 5
-  m_Name: LvValue
+  m_Name: ParryValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2213,15 +2213,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   I_MaxHealth: 100
-  I_ActHealth: 0
-  I_BaseDamage: 40
+  I_ActHealth: 100
+  I_BaseDamage: 20
   F_DamageScale: 0.1
   I_ActDamage: 0
-  I_Healling: 15
-  I_HealUse: 3
+  I_Healling: 20
+  I_ActHeals: 3
+  I_MaxHeals: 3
   F_ParryTime: 0.5
-  F_ParryCD: 1
-  I_SelfDamage: 15
+  F_ParryDuration: 0.5
+  F_ParryCD: 1.5
+  I_SelfDamage: 10
   G_BulletPrefab: {fileID: 4530029963175671424, guid: fd3f04858b2de7e4ea0a91d980eb9ef0, type: 3}
   I_BulletPoolSize: 20
   T_ShootingPoint: {fileID: 2030432666}
@@ -2253,6 +2255,17 @@ MonoBehaviour:
   Tx_TotalLv: {fileID: 166546714}
   Tx_ActPoints: {fileID: 1111515030}
   Tx_ActCost: {fileID: 667057324}
+  Tx_ActVida: {fileID: 1167327806}
+  Tx_MaxVida: {fileID: 1779815687}
+  Tx_ActHeals: {fileID: 1254335613}
+  Tx_MaxHeals: {fileID: 1526448970}
+  Tx_Healling: {fileID: 611534102}
+  Tx_SelfDmg: {fileID: 936709761}
+  Tx_BaseDmg: {fileID: 28028652}
+  Tx_DmgScale: {fileID: 1802584843}
+  Tx_FinalDmg: {fileID: 1670158550}
+  Tx_ParryCD: {fileID: 1967869836}
+  Tx_Parry: {fileID: 461670390}
 --- !u!1 &611534100
 GameObject:
   m_ObjectHideFlags: 0
@@ -2265,7 +2278,7 @@ GameObject:
   - component: {fileID: 611534103}
   - component: {fileID: 611534102}
   m_Layer: 5
-  m_Name: LvValue
+  m_Name: HeallingValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2895,7 +2908,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.2716385, y: 0}
   m_AnchorMax: {x: 0.2803975, y: 1}
-  m_AnchoredPosition: {x: 0.099975586, y: -0.00015258789}
+  m_AnchoredPosition: {x: -5.5910797, y: -0.00015258789}
   m_SizeDelta: {x: -0.2942009, y: 0.0001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &802033062
@@ -3007,7 +3020,7 @@ GameObject:
   - component: {fileID: 936709762}
   - component: {fileID: 936709761}
   m_Layer: 5
-  m_Name: LvValue
+  m_Name: SlfDmgValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3245,8 +3258,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3341205, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.769989, y: -0.000091552734}
-  m_SizeDelta: {x: 1.539978, y: 0.0002002716}
+  m_AnchoredPosition: {x: 1.7449036, y: -0.000091552734}
+  m_SizeDelta: {x: -3.4897, y: 0.0002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &994706166
 MonoBehaviour:
@@ -3414,8 +3427,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3341205, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.769989, y: -0.000091552734}
-  m_SizeDelta: {x: 1.539978, y: 0.0002002716}
+  m_AnchoredPosition: {x: 1.7449036, y: -0.000091552734}
+  m_SizeDelta: {x: -3.4897, y: 0.0002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1034047160
 MonoBehaviour:
@@ -3863,7 +3876,7 @@ GameObject:
   - component: {fileID: 1167327807}
   - component: {fileID: 1167327806}
   m_Layer: 5
-  m_Name: LvActValue
+  m_Name: HealthActValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3884,10 +3897,10 @@ RectTransform:
   m_Father: {fileID: 773156468}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.23136148, y: 0}
-  m_AnchorMax: {x: 0.2716385, y: 1}
-  m_AnchoredPosition: {x: 0.09326172, y: -0.00015258789}
-  m_SizeDelta: {x: 0.38940048, y: 0.0001}
+  m_AnchorMin: {x: 0.21124099, y: 0}
+  m_AnchorMax: {x: 0.26548204, y: 1}
+  m_AnchoredPosition: {x: -0.13433838, y: -0.00015258789}
+  m_SizeDelta: {x: 3.3805, y: 0.0001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1167327806
 MonoBehaviour:
@@ -3909,7 +3922,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 99
+  m_text: 9999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3998,7 +4011,7 @@ GameObject:
   - component: {fileID: 1254335614}
   - component: {fileID: 1254335613}
   m_Layer: 5
-  m_Name: LvActValue
+  m_Name: HealActValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4157,8 +4170,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3341205, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.769989, y: -0.000091552734}
-  m_SizeDelta: {x: 1.539978, y: 0.0002002716}
+  m_AnchoredPosition: {x: 1.7449036, y: -0.000091552734}
+  m_SizeDelta: {x: -3.4897, y: 0.0002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1255131650
 MonoBehaviour:
@@ -4364,8 +4377,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3341205, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.769989, y: -0.000091552734}
-  m_SizeDelta: {x: 1.539978, y: 0.0002002716}
+  m_AnchoredPosition: {x: 1.7449036, y: -0.000091552734}
+  m_SizeDelta: {x: -3.4897, y: 0.0002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1276426693
 MonoBehaviour:
@@ -5070,7 +5083,7 @@ GameObject:
   - component: {fileID: 1526448971}
   - component: {fileID: 1526448970}
   m_Layer: 5
-  m_Name: LvMaxValue
+  m_Name: HealMaxValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5398,8 +5411,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3341205, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.769989, y: -0.000091552734}
-  m_SizeDelta: {x: 1.539978, y: 0.0002002716}
+  m_AnchoredPosition: {x: 1.7449036, y: -0.000091552734}
+  m_SizeDelta: {x: -3.4897, y: 0.0002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1612955886
 MonoBehaviour:
@@ -5543,7 +5556,7 @@ GameObject:
   - component: {fileID: 1670158551}
   - component: {fileID: 1670158550}
   m_Layer: 5
-  m_Name: LvValue
+  m_Name: EndDmgValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5778,8 +5791,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3341205, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.769989, y: -0.000091552734}
-  m_SizeDelta: {x: 1.539978, y: 0.0002002716}
+  m_AnchoredPosition: {x: 1.7449036, y: -0.000091552734}
+  m_SizeDelta: {x: -3.4897, y: 0.0002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1679712572
 MonoBehaviour:
@@ -6011,7 +6024,7 @@ GameObject:
   - component: {fileID: 1779815688}
   - component: {fileID: 1779815687}
   m_Layer: 5
-  m_Name: LvMaxValue
+  m_Name: HealthMaxValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6032,10 +6045,10 @@ RectTransform:
   m_Father: {fileID: 773156468}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.2803975, y: 0}
-  m_AnchorMax: {x: 0.32175902, y: 1}
-  m_AnchoredPosition: {x: -0.3524933, y: -0.00015258789}
-  m_SizeDelta: {x: -0.6105995, y: 0.0001}
+  m_AnchorMin: {x: 0.27512053, y: 0}
+  m_AnchorMax: {x: 0.3341205, y: 1}
+  m_AnchoredPosition: {x: -0.6116028, y: -0.00015258789}
+  m_SizeDelta: {x: -1.7469001, y: 0.0001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1779815687
 MonoBehaviour:
@@ -6057,7 +6070,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 99
+  m_text: 9999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6484,7 +6497,7 @@ GameObject:
   - component: {fileID: 1802584844}
   - component: {fileID: 1802584843}
   m_Layer: 5
-  m_Name: LvValue
+  m_Name: DmgScaleValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6643,8 +6656,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3341205, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.769989, y: -0.000091552734}
-  m_SizeDelta: {x: 1.539978, y: 0.0002002716}
+  m_AnchoredPosition: {x: 1.7449036, y: -0.000091552734}
+  m_SizeDelta: {x: -3.4897, y: 0.0002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1809133843
 MonoBehaviour:
@@ -6812,8 +6825,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3341205, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.769989, y: -0.000091552734}
-  m_SizeDelta: {x: 1.539978, y: 0.0002002716}
+  m_AnchoredPosition: {x: 1.7449036, y: -0.000091552734}
+  m_SizeDelta: {x: -3.4897, y: 0.0002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1824271476
 MonoBehaviour:
@@ -7068,7 +7081,7 @@ GameObject:
   - component: {fileID: 1967869837}
   - component: {fileID: 1967869836}
   m_Layer: 5
-  m_Name: LvValue
+  m_Name: CdParryValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7222,13 +7235,13 @@ RectTransform:
   m_Children:
   - {fileID: 8629152251577080354}
   - {fileID: 368476234091758043}
+  - {fileID: 368476234180504590}
   - {fileID: 368476235078387665}
   - {fileID: 368476233613524923}
   - {fileID: 368476233990460094}
   - {fileID: 368476235081930667}
-  - {fileID: 368476234180504590}
-  - {fileID: 368476234325779706}
   - {fileID: 368476233933873838}
+  - {fileID: 368476234325779706}
   m_Father: {fileID: 939980577}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7887,7 +7900,7 @@ RectTransform:
   - {fileID: 5867906560001722548}
   - {fileID: 8384882262513605328}
   m_Father: {fileID: 1970819363}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -7911,7 +7924,7 @@ RectTransform:
   - {fileID: 5867906560326243745}
   - {fileID: 8384882262837069765}
   m_Father: {fileID: 1970819363}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -7935,7 +7948,7 @@ RectTransform:
   - {fileID: 5867906560395552177}
   - {fileID: 8384882262889543637}
   m_Father: {fileID: 1970819363}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -7983,7 +7996,7 @@ RectTransform:
   - {fileID: 5867906559499295489}
   - {fileID: 8384882263085369701}
   m_Father: {fileID: 1970819363}
-  m_RootOrder: 6
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -8007,7 +8020,7 @@ RectTransform:
   - {fileID: 5867906559656989685}
   - {fileID: 8384882263225303441}
   m_Father: {fileID: 1970819363}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -8031,7 +8044,7 @@ RectTransform:
   - {fileID: 5867906559340064990}
   - {fileID: 8384882263982645946}
   m_Father: {fileID: 1970819363}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -8055,7 +8068,7 @@ RectTransform:
   - {fileID: 5867906559339143332}
   - {fileID: 8384882263981470400}
   m_Father: {fileID: 1970819363}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -8820,7 +8833,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 584029453}
         m_TargetAssemblyTypeName: UpgradesSystem, Project.Gameplay
-        m_MethodName: UpgradeDmgScale
+        m_MethodName: UpgradeMaxHealth
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 2996429450148197267}
@@ -8876,7 +8889,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 584029453}
         m_TargetAssemblyTypeName: UpgradesSystem, Project.Gameplay
-        m_MethodName: UpgradeDmgScale
+        m_MethodName: UpgradeNumHeals
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 2996429450191314502}
@@ -8932,7 +8945,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 584029453}
         m_TargetAssemblyTypeName: UpgradesSystem, Project.Gameplay
-        m_MethodName: UpgradeDmgScale
+        m_MethodName: UpgradeParry
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 2996429450046199474}
@@ -9044,7 +9057,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 584029453}
         m_TargetAssemblyTypeName: UpgradesSystem, Project.Gameplay
-        m_MethodName: UpgradeDmgScale
+        m_MethodName: UpgradeHeal
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 2996429450904204697}
@@ -9100,7 +9113,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 584029453}
         m_TargetAssemblyTypeName: UpgradesSystem, Project.Gameplay
-        m_MethodName: UpgradeDmgScale
+        m_MethodName: UpgradeSelfDmg
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 2996429451834265075}
@@ -9156,7 +9169,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 584029453}
         m_TargetAssemblyTypeName: UpgradesSystem, Project.Gameplay
-        m_MethodName: UpgradeDmgScale
+        m_MethodName: UpgradeCDParry
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 2996429452057104614}
@@ -9212,7 +9225,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 584029453}
         m_TargetAssemblyTypeName: UpgradesSystem, Project.Gameplay
-        m_MethodName: UpgradeDmgScale
+        m_MethodName: UpgradeBaseDmg
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 2996429451857780982}
@@ -10788,7 +10801,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type_Upgrade: 0
   I_ActLv: 0
-  F_RatioMejora: 0
+  F_RatioMejora: 0.15
   B_BotonMejora: {fileID: 1208877214964200062}
   Tx_Lv: {fileID: 4989514016822630537}
 --- !u!114 &2996429450148197267
@@ -10803,9 +10816,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9216c615524aae546ae7daa8e32f56d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type_Upgrade: 0
+  type_Upgrade: 2
   I_ActLv: 0
-  F_RatioMejora: 0
+  F_RatioMejora: 1.2
   B_BotonMejora: {fileID: 1208877214731261791}
   Tx_Lv: {fileID: 4989514016588332456}
 --- !u!114 &2996429450191314502
@@ -10822,7 +10835,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type_Upgrade: 0
   I_ActLv: 0
-  F_RatioMejora: 0
+  F_RatioMejora: 1
   B_BotonMejora: {fileID: 1208877214824200842}
   Tx_Lv: {fileID: 4989514016698290301}
 --- !u!114 &2996429450903021027
@@ -10839,7 +10852,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type_Upgrade: 0
   I_ActLv: 0
-  F_RatioMejora: 0
+  F_RatioMejora: 0.04
   B_BotonMejora: {fileID: 1208877215720341807}
   Tx_Lv: {fileID: 4989514017612082136}
 --- !u!114 &2996429450904204697
@@ -10854,9 +10867,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9216c615524aae546ae7daa8e32f56d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type_Upgrade: 0
+  type_Upgrade: 2
   I_ActLv: 0
-  F_RatioMejora: 0
+  F_RatioMejora: 1.3
   B_BotonMejora: {fileID: 1208877215722049877}
   Tx_Lv: {fileID: 4989514017613003682}
 --- !u!114 &2996429451834265075
@@ -10873,7 +10886,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type_Upgrade: 0
   I_ActLv: 0
-  F_RatioMejora: 0
+  F_RatioMejora: 9
   B_BotonMejora: {fileID: 1208877216400501055}
   Tx_Lv: {fileID: 4989514018274657224}
 --- !u!114 &2996429451857780982
@@ -10888,9 +10901,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9216c615524aae546ae7daa8e32f56d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type_Upgrade: 0
+  type_Upgrade: 2
   I_ActLv: 0
-  F_RatioMejora: 0
+  F_RatioMejora: 1.2
   B_BotonMejora: {fileID: 1208877216776356922}
   Tx_Lv: {fileID: 4989514018634739405}
 --- !u!114 &2996429452057104614
@@ -10905,9 +10918,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9216c615524aae546ae7daa8e32f56d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type_Upgrade: 0
+  type_Upgrade: 1
   I_ActLv: 0
-  F_RatioMejora: 0
+  F_RatioMejora: 0.1
   B_BotonMejora: {fileID: 1208877216723973162}
   Tx_Lv: {fileID: 4989514018565627613}
 --- !u!224 &3409967885271472076

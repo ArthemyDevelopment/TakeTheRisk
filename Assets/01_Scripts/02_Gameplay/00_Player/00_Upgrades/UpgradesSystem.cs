@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -18,9 +19,21 @@ public class UpgradesSystem : MonoBehaviour
 
     [FoldoutGroup("References")] public List<Upgrade> Up_Upgrades;
     [FoldoutGroup("References")] public GameObject G_UpgradeMenuCanvas;
-    [FoldoutGroup("References")] public TMP_Text Tx_TotalLv;
-    [FoldoutGroup("References")] public TMP_Text Tx_ActPoints;
-    [FoldoutGroup("References")] public TMP_Text Tx_ActCost;
+    [FoldoutGroup("References/Points")] public TMP_Text Tx_TotalLv;
+    [FoldoutGroup("References/Points")] public TMP_Text Tx_ActPoints;
+    [FoldoutGroup("References/Points")] public TMP_Text Tx_ActCost;
+    [FoldoutGroup("References/Stats")] public TMP_Text Tx_ActVida;
+    [FoldoutGroup("References/Stats")] public TMP_Text Tx_MaxVida;
+    [FoldoutGroup("References/Stats")] public TMP_Text Tx_ActHeals;
+    [FoldoutGroup("References/Stats")] public TMP_Text Tx_MaxHeals;
+    [FoldoutGroup("References/Stats")] public TMP_Text Tx_Healling;
+    [FoldoutGroup("References/Stats")] public TMP_Text Tx_SelfDmg;
+    [FoldoutGroup("References/Stats")] public TMP_Text Tx_BaseDmg;
+    [FoldoutGroup("References/Stats")] public TMP_Text Tx_DmgScale;
+    [FoldoutGroup("References/Stats")] public TMP_Text Tx_FinalDmg;
+    [FoldoutGroup("References/Stats")] public TMP_Text Tx_ParryCD;
+    [FoldoutGroup("References/Stats")] public TMP_Text Tx_Parry;
+    
     
 
 
@@ -87,12 +100,12 @@ public class UpgradesSystem : MonoBehaviour
         }
     public void UpgradeNumHeals(Upgrade u)
         {
-            PlayerManager.current.I_HealUse = u.UpgradeStat(PlayerManager.current.I_HealUse);
+            PlayerManager.current.I_ActHeals = u.UpgradeStat(PlayerManager.current.I_ActHeals);
             UpgradeChanges();
         }
     public void UpgradeParry(Upgrade u)
         {
-            PlayerManager.current.F_ParryTime = u.UpgradeStat(PlayerManager.current.F_ParryTime);
+            PlayerManager.current.F_ParryDuration = u.UpgradeStat(PlayerManager.current.F_ParryDuration);
             UpgradeChanges();
         }
     public void UpgradeCDParry(Upgrade u)
@@ -119,6 +132,19 @@ public class UpgradesSystem : MonoBehaviour
         Tx_ActCost.text = I_Coste.ToString();
         Tx_ActPoints.text = I_PuntosMejora.ToString();
         Tx_TotalLv.text = I_TotalLv.ToString();
+        Tx_ActVida.text = PlayerManager.current.I_ActHealth.ToString();
+        Tx_MaxVida.text = PlayerManager.current.I_MaxHealth.ToString();
+        Tx_ActHeals.text = PlayerManager.current.I_ActHeals.ToString();
+        Tx_MaxHeals.text = PlayerManager.current.I_MaxHeals.ToString();
+        Tx_Healling.text = PlayerManager.current.I_Healling.ToString();
+        Tx_SelfDmg.text = PlayerManager.current.I_SelfDamage.ToString();
+        Tx_BaseDmg.text = PlayerManager.current.I_BaseDamage.ToString();
+        Tx_DmgScale.text = PlayerManager.current.F_DamageScale.ToString("F2",CultureInfo.InvariantCulture);
+        Tx_FinalDmg.text = PlayerManager.current.I_ActDamage.ToString();
+        Tx_ParryCD.text = PlayerManager.current.F_ParryCD.ToString("F2",CultureInfo.InvariantCulture);
+        Tx_Parry.text = PlayerManager.current.F_ParryDuration.ToString("F2",CultureInfo.InvariantCulture);
+
+
     }
 
     #endregion
