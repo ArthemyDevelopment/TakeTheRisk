@@ -9,16 +9,22 @@ using UnityEngine.InputSystem;
 
 public class UpgradesSystem : MonoBehaviour
 {
-    public static UpgradesSystem current;
     
-    [FoldoutGroup("Variables"), ShowInInspector, ReadOnly] private bool B_isOpen;
-    [FoldoutGroup("Variables"), ShowInInspector, ReadOnly] private int I_TotalLv;
-    [FoldoutGroup("Variables")] public int I_PuntosMejora;
-    [FoldoutGroup("Variables")] public int I_Coste;
-    [FoldoutGroup("Variables"), ShowInInspector] private int I_AumentoCoste;
+    /*
+     * 
+     */
+    public static UpgradesSystem current;//Singleton
+    
+    [FoldoutGroup("Variables"), ShowInInspector, ReadOnly] private bool B_isOpen; //Comprueba si se abrio el menu
+    [FoldoutGroup("Variables"), ShowInInspector, ReadOnly] private int I_TotalLv; //Suma total de niveles de mejora
+    [FoldoutGroup("Variables")] public int I_PuntosMejora; //Cuantos puntos de mejora se tienen
+    [FoldoutGroup("Variables")] public int I_Coste;  //Cuanto cuesta una nueva mejora
+    [FoldoutGroup("Variables"), ShowInInspector] private float F_AumentoCoste; //Por cuanto se multiplica el coste de mejora con cada nivel
 
-    [FoldoutGroup("References")] public List<Upgrade> Up_Upgrades;
-    [FoldoutGroup("References")] public GameObject G_UpgradeMenuCanvas;
+    [FoldoutGroup("References")] public List<Upgrade> Up_Upgrades; //Ref a todos los scripts de upgrades
+    [FoldoutGroup("References")] public GameObject G_UpgradeMenuCanvas; //Ref al canvas del menu
+    
+    //Ref a todos los textos de las stats
     [FoldoutGroup("References/Points")] public TMP_Text Tx_TotalLv;
     [FoldoutGroup("References/Points")] public TMP_Text Tx_ActPoints;
     [FoldoutGroup("References/Points")] public TMP_Text Tx_ActCost;
@@ -47,11 +53,11 @@ public class UpgradesSystem : MonoBehaviour
 
     private void Start()
     {
-        InputController.current.InputManager.Player.UpgradeMenu.performed += OpenUpgradeMenu;
+        InputController.current.InputManager.Player.UpgradeMenu.performed += OpenUpgradeMenu; //Setear y asegurarse que el input este configurado
         UpdateText();
     }
 
-    public void OpenUpgradeMenu(InputAction.CallbackContext call)
+    public void OpenUpgradeMenu(InputAction.CallbackContext call) //Abrir y cerra el menu de mejora
     {
         switch (B_isOpen)
         {
@@ -67,12 +73,10 @@ public class UpgradesSystem : MonoBehaviour
         }
     }
 
-    #region Upgrades Methods
 
-    /*
-    Each method take as param the script of the upgrade and apply the return method
-    UpgradeStat to the var from PlayerManager
-    */
+    //Cada metodo toma como parametro el script de upgrade y cambia el valor de la stat aplicando la formula de upgradear
+    #region Upgrades Methods 
+
     public void UpgradeMaxHealth(Upgrade u)
         {
             PlayerManager.current.I_MaxHealth = u.UpgradeStat(PlayerManager.current.I_MaxHealth);
@@ -114,12 +118,13 @@ public class UpgradesSystem : MonoBehaviour
             UpgradeChanges();
         }
 
+    #endregion
 
-    void UpgradeChanges()
+    void UpgradeChanges() //Aplica los cambios a los valores despues de cada mejora, tanto de nivel total, puntos actual, coste del sig nivel e información en pantalla
     {
         I_TotalLv++;
         I_PuntosMejora -= I_Coste;
-        I_Coste += I_AumentoCoste;
+        I_Coste = (int)(I_Coste * F_AumentoCoste);
         UpdateText();
         foreach (Upgrade u in Up_Upgrades)
         {
@@ -127,7 +132,7 @@ public class UpgradesSystem : MonoBehaviour
         }
     }
 
-    void UpdateText()
+    void UpdateText() //Actualiza todos los textos con los valores actuales
     {
         Tx_ActCost.text = I_Coste.ToString();
         Tx_ActPoints.text = I_PuntosMejora.ToString();
@@ -147,7 +152,6 @@ public class UpgradesSystem : MonoBehaviour
 
     }
 
-    #endregion
 
 }
 

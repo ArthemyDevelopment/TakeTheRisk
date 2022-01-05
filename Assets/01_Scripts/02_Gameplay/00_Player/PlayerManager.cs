@@ -63,7 +63,7 @@ public class PlayerManager : MonoBehaviour
             Destroy(this);
     }
 
-    private void Start()
+    private void Start() //Setear input para actualizar dirección de los disparos y resetar vida
     {
         InputController.current.InputManager.Player.Shooting.performed += ShootAngle;
         I_ActHealth = I_MaxHealth;
@@ -72,7 +72,7 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    private void Update()
+    private void Update() //Comprobar si se puede disparar y hacerlo cuando corresponda
     {
         if (B_CanShoot && B_IsShooting)
         {
@@ -87,7 +87,7 @@ public class PlayerManager : MonoBehaviour
 
     #region Initial configuration
 
-    private void SetPool()
+    private void SetPool() //Iniciacion del object pool de balas
     {
         for (int i = 0; i < I_BulletPoolSize; i++)
         {
@@ -95,7 +95,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
     
-    private int SetDamage()
+    private int SetDamage() //Configura daño del player considerando un porcentaje de vida faltante
     {
         float temp = I_BaseDamage + ((I_MaxHealth-I_ActHealth)* F_DamageScale);
         return (int)temp;
@@ -105,7 +105,7 @@ public class PlayerManager : MonoBehaviour
     #endregion
     
     #region Shooting
-    public void ShootAngle(InputAction.CallbackContext call)
+    public void ShootAngle(InputAction.CallbackContext call) //Define angulo de disparo y cambia si se puede disparar o no
     {
         Vector2 temp = call.ReadValue<Vector2>();
         if (temp.magnitude > 0.1f)
@@ -118,7 +118,7 @@ public class PlayerManager : MonoBehaviour
         
     }
 
-    GameObject GetBullet()
+    GameObject GetBullet() //Solicita un bala a la pool, de no haber disponibles crea una nueva
     {
         if (Q_BulletPool.Count != 0)
             return Q_BulletPool.Dequeue();
@@ -127,13 +127,13 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    public void StoreBullet(GameObject g)
+    public void StoreBullet(GameObject g) //Regresa balas a la pool
     {
         g.SetActive(false);
         Q_BulletPool.Enqueue(g);
     }
 
-    IEnumerator ShootDelay()
+    IEnumerator ShootDelay() //Delay entre cada disparo
     {
         yield return new WaitForSeconds(F_ShootDelay);
         B_CanShoot = true;

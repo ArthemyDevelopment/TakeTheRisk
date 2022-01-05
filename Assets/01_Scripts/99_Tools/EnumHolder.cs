@@ -19,3 +19,8 @@ public enum SaveDataKeys
 {
     DataClass
 }
+
+public enum Weapons
+{
+    starter
+}

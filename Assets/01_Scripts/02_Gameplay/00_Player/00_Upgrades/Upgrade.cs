@@ -7,9 +7,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [DefaultExecutionOrder(1)]
-public class Upgrade : MonoBehaviour
+public class Upgrade : MonoBehaviour 
 {
-    enum TypeOfUpgrade
+    /*
+     *Cada objeto de upgrade del menu debe tener este script, contiene toda la info necesaria sobre como y por cuanto mejorar
+     * las estadisticas junto con las formulas y metodos correspondientes. La info en pantalla se actualiza cada vez se abre
+     * el menu y cuando se mejora una stat.
+     */
+    
+    enum TypeOfUpgrade //Define como se aplicara el ratio de mejora, ya sea sumando, restando o multiplicando una cantidad
     {
         sum,
         rest,
@@ -17,11 +23,11 @@ public class Upgrade : MonoBehaviour
     }
     
     
-    [SerializeField]private TypeOfUpgrade type_Upgrade;
-    [SerializeField]private int I_ActLv;
-    [SerializeField]private float F_RatioMejora;
-    [SerializeField]private Button B_BotonMejora;
-    [SerializeField]private TMP_Text Tx_Lv;
+    [SerializeField]private TypeOfUpgrade type_Upgrade; //Definir el tipo de mejora en cada objeto
+    [SerializeField]private int I_ActLv; //Nivel actual de la mejora
+    [SerializeField]private float F_RatioMejora; //Por cuanto mejorara la mejora
+    [SerializeField]private Button B_BotonMejora; //Ref al boton para mejorar
+    [SerializeField]private TMP_Text Tx_Lv; //Ref al texto con el nivel
 
     private void OnEnable()
     {
@@ -29,19 +35,19 @@ public class Upgrade : MonoBehaviour
         UpdateInfo();
     }
 
-    public void UpdateInfo()
+    public void UpdateInfo() //Setear si se puede mejorar y el nivel
     {
         B_BotonMejora.interactable = CanUpgrade();
         Tx_Lv.text = I_ActLv.ToString();
     }
     
     
-    bool CanUpgrade()
+    bool CanUpgrade() //Comprueba si hay suficientes puntos para mejorar
     {
         return UpgradesSystem.current.I_Coste <= UpgradesSystem.current.I_PuntosMejora;
     }
 
-    public float UpgradeStat(float f)
+    public float UpgradeStat(float f) //Se aplica el ratio de mejora segun el tipo si el valor es float, toma como parametro el valor actual y retorna el valor mejorado
     {
         float temp = 0;
         switch (type_Upgrade)
@@ -63,7 +69,7 @@ public class Upgrade : MonoBehaviour
 
     }
 
-    public int UpgradeStat(int i)
+    public int UpgradeStat(int i) //Se aplica el ratio de mejora segun el tipo si el valor es int, toma como parametro el valor actual y retorna el valor mejorado
     {
         int temp = 0;
         switch (type_Upgrade)
