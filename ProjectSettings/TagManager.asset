@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Player/Collider
+  - Enemy/Hitbox
+  - Enemy/MaxRange
+  - Enemy/Agro
+  - Enemy/Shooting
   layers:
   - Default
   - TransparentFX
@@ -12,8 +16,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Enemy
   - 
   - 
   - 

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBullets : MonoBehaviour
@@ -18,7 +15,7 @@ public class PlayerBullets : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += transform.right * F_Velocity * Time.deltaTime;
+        transform.position += transform.right * (F_Velocity * Time.deltaTime);
         V3_ActPos = transform.position;
         float dist = Vector3.Distance(V3_ActPos, V3_StartPos);
         if(dist>F_MaxDist)

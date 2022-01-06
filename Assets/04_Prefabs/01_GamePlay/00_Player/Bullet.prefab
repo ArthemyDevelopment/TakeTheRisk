@@ -242,5 +242,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90940c9d6bf317f4580ad48a51251462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  F_MaxDist: 50
+  F_MaxDist: 25
   F_Velocity: 30
