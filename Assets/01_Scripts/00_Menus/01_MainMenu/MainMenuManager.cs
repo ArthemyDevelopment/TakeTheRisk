@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using ArthemyDevelopment.Save;
 using UnityEngine.Events;
@@ -5,6 +6,7 @@ using UnityEngine.Events;
 public class MainMenuManager : MonoBehaviour
 {
     private OptionMenuManager OMM;
+    private GameInputManager InputManager;
 
     public GameObject G_ContinueButton;
     
@@ -15,6 +17,11 @@ public class MainMenuManager : MonoBehaviour
     public UnityEvent Ev_StartGame;
 
 
+    private void Awake()
+    {
+        InputManager = new GameInputManager();
+        InputManager.UI.Enable();
+    }
 
     // Start is called before the first frame update
     void Start()

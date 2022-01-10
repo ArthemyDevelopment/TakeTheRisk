@@ -49,9 +49,10 @@ public class PlayerManager : MonoBehaviour
     [FoldoutGroup("Shooting"), ShowInInspector, ReadOnly, PropertySpace(SpaceAfter = 15)] private float F_ShootAngle;
 
     //----------------------GUI----------------------------//
-    [FoldoutGroup("GUI"),ShowInInspector] private Slider Sl_LifeBar;
-    [FoldoutGroup("GUI"),ShowInInspector] private TMP_Text Tx_Heals;
-    [FoldoutGroup("GUI"),ShowInInspector] private TMP_Text Tx_ActDamage;
+    [FoldoutGroup("GUI")][SerializeField] private Slider Sl_LifeBar;
+    [FoldoutGroup("GUI")][SerializeField] private RectTransform Rt_LifeBar;
+    [FoldoutGroup("GUI")][SerializeField] private TMP_Text Tx_Heals;
+    
 
 
     void Awake()
@@ -66,7 +67,7 @@ public class PlayerManager : MonoBehaviour
     {
         InputController.current.InputManager.Player.Shooting.performed += ShootAngle;
         I_ActHealth = I_MaxHealth;
-        I_ActDamage = SetDamage();
+        SetDamage();
         SetPool();
 
     }
@@ -94,10 +95,10 @@ public class PlayerManager : MonoBehaviour
         }
     }
     
-    private int SetDamage() //Configura daño del player considerando un porcentaje de vida faltante
+    public void SetDamage() //Configura daño del player considerando un porcentaje de vida faltante
     {
         float temp = I_BaseDamage + ((I_MaxHealth-I_ActHealth)* F_DamageScale);
-        return (int)temp;
+        I_ActDamage = (int)temp;
         
     }
 
@@ -138,6 +139,57 @@ public class PlayerManager : MonoBehaviour
         B_CanShoot = true;
     }
     
+    #endregion
+
+    #region Damage
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy/Bullet"))
+        {
+            
+        }
+    }
+
+    void ApplyDamage(int i)
+    {
+        if (I_ActHealth <= i)
+        {
+            Death();
+        }
+        else
+        {
+            I_ActHealth -= i;
+            UpdateHud();
+        }
+    }
+
+    void Death()
+    {
+        
+    }
+
+    #endregion
+    
+    #region HUD
+
+    public void UpdateHud()
+    {
+        Sl_LifeBar.maxValue = I_MaxHealth;
+        Sl_LifeBar.value = I_ActHealth;
+        Rt_LifeBar.sizeDelta = new Vector2(HealthBarMap(I_MaxHealth), Rt_LifeBar.sizeDelta.y);
+        Tx_Heals.text = I_ActHeals.ToString();
+        
+
+    }
+
+    int HealthBarMap(int value)
+    {
+        return (value - 100) * (1250 - 300) / (1354 - 100) + 300;
+    }
+
+    
+
     #endregion
 
 }

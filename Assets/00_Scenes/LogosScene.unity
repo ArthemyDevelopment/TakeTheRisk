@@ -382,7 +382,7 @@ MonoBehaviour:
   anchorRect:
     serializedVersion: 2
     x: 955.46094
-    y: 550.6364
+    y: 550.3192
     width: 447.861
     height: 597.1151
   anchorVector: {x: 0, y: 0}
@@ -434,6 +434,7 @@ GameObject:
   m_Component:
   - component: {fileID: 893953647}
   - component: {fileID: 893953648}
+  - component: {fileID: 893953649}
   m_Layer: 0
   m_Name: DontDestroyManagers
   m_TagString: Untagged
@@ -473,6 +474,18 @@ MonoBehaviour:
     S_FileName: "Espa\xF1ol.csv"
   - S_Name: English
     S_FileName: English.csv
+--- !u!114 &893953649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893953646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58d6f128f6371244782b362b7b948c30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1018317993
 GameObject:
   m_ObjectHideFlags: 0

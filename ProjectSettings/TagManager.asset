@@ -9,6 +9,7 @@ TagManager:
   - Enemy/MaxRange
   - Enemy/Agro
   - Enemy/Shooting
+  - Enemy/Bullet
   layers:
   - Default
   - TransparentFX

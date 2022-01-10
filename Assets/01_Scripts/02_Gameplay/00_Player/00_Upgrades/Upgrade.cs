@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,14 +33,32 @@ public class Upgrade : MonoBehaviour
 
     public void UpdateInfo() //Setear si se puede mejorar y el nivel
     {
-        B_BotonMejora.interactable = CanUpgrade();
-        Tx_Lv.text = I_ActLv.ToString();
+        if (I_ActLv < 10)
+        {
+            B_BotonMejora.interactable = CanUpgrade();
+            Tx_Lv.text = I_ActLv.ToString();
+        }
+        else
+        {
+            B_BotonMejora.gameObject.SetActive(false);
+            Tx_Lv.text = "10";
+        }
     }
     
     
     bool CanUpgrade() //Comprueba si hay suficientes puntos para mejorar
     {
-        return UpgradesSystem.current.I_Coste <= UpgradesSystem.current.I_PuntosMejora;
+        if (UpgradesSystem.current.I_PuntosMejora != 0)
+        {
+            if (UpgradesSystem.current.I_Coste <= UpgradesSystem.current.I_PuntosMejora)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+        else
+            return false;
     }
 
     public float UpgradeStat(float f) //Se aplica el ratio de mejora segun el tipo si el valor es float, toma como parametro el valor actual y retorna el valor mejorado

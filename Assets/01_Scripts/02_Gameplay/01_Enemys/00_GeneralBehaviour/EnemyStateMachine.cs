@@ -56,7 +56,7 @@ public class EnemyStateMachine : MonoBehaviour
                 break;
             
             default:
-                throw new ArgumentOutOfRangeException();
+                break;
         }
     }
 

@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using Sirenix.OdinInspector;
@@ -19,7 +17,7 @@ public class UpgradesSystem : MonoBehaviour
     [FoldoutGroup("Variables"), ShowInInspector, ReadOnly] private int I_TotalLv; //Suma total de niveles de mejora
     [FoldoutGroup("Variables")] public int I_PuntosMejora; //Cuantos puntos de mejora se tienen
     [FoldoutGroup("Variables")] public int I_Coste;  //Cuanto cuesta una nueva mejora
-    [FoldoutGroup("Variables"), ShowInInspector] private float F_AumentoCoste; //Por cuanto se multiplica el coste de mejora con cada nivel
+    [FoldoutGroup("Variables")][SerializeField] private float F_AumentoCoste; //Por cuanto se multiplica el coste de mejora con cada nivel
 
     [FoldoutGroup("References")] public List<Upgrade> Up_Upgrades; //Ref a todos los scripts de upgrades
     [FoldoutGroup("References")] public GameObject G_UpgradeMenuCanvas; //Ref al canvas del menu
@@ -40,9 +38,6 @@ public class UpgradesSystem : MonoBehaviour
     [FoldoutGroup("References/Stats")] public TMP_Text Tx_ParryCD;
     [FoldoutGroup("References/Stats")] public TMP_Text Tx_Parry;
     
-    
-
-
     private void Awake()
     {
         if (current == null)
@@ -54,6 +49,8 @@ public class UpgradesSystem : MonoBehaviour
     private void Start()
     {
         InputController.current.InputManager.Player.UpgradeMenu.performed += OpenUpgradeMenu; //Setear y asegurarse que el input este configurado
+        InputController.current.InputManager.UI.UpgradeMenu.performed += OpenUpgradeMenu; //Setear y asegurarse que el input este configurado
+        InputController.current.InputManager.UI.Cancel.performed += OpenUpgradeMenu; //Setear y asegurarse que el input este configurado
         UpdateText();
     }
 
@@ -63,15 +60,20 @@ public class UpgradesSystem : MonoBehaviour
         {
             case false:
                 G_UpgradeMenuCanvas.SetActive(true);
+                InputController.current.InputManager.UI.Enable();
+                InputController.current.InputManager.Player.Disable();
                 B_isOpen = true;
                 break;
             
             case true:
                 G_UpgradeMenuCanvas.SetActive(false);
+                InputController.current.InputManager.Player.Enable();
+                InputController.current.InputManager.UI.Disable();
                 B_isOpen = false;
                 break;
         }
     }
+    
 
 
     //Cada metodo toma como parametro el script de upgrade y cambia el valor de la stat aplicando la formula de upgradear
@@ -80,6 +82,7 @@ public class UpgradesSystem : MonoBehaviour
     public void UpgradeMaxHealth(Upgrade u)
         {
             PlayerManager.current.I_MaxHealth = u.UpgradeStat(PlayerManager.current.I_MaxHealth);
+            PlayerManager.current.I_ActHealth = PlayerManager.current.I_MaxHealth;
             UpgradeChanges();
         }
     public void UpgradeHeal(Upgrade u)
@@ -95,16 +98,19 @@ public class UpgradesSystem : MonoBehaviour
     public void UpgradeBaseDmg(Upgrade u)
         {
             PlayerManager.current.I_BaseDamage = u.UpgradeStat(PlayerManager.current.I_BaseDamage);
+            PlayerManager.current.SetDamage();
             UpgradeChanges();
         }
     public void UpgradeDmgScale(Upgrade u)
         {
             PlayerManager.current.F_DamageScale = u.UpgradeStat(PlayerManager.current.F_DamageScale);
+            PlayerManager.current.SetDamage();
             UpgradeChanges();
         }
     public void UpgradeNumHeals(Upgrade u)
         {
-            PlayerManager.current.I_ActHeals = u.UpgradeStat(PlayerManager.current.I_ActHeals);
+            PlayerManager.current.I_MaxHeals = u.UpgradeStat(PlayerManager.current.I_MaxHeals);
+            PlayerManager.current.I_ActHeals = PlayerManager.current.I_MaxHeals;
             UpgradeChanges();
         }
     public void UpgradeParry(Upgrade u)
@@ -124,7 +130,7 @@ public class UpgradesSystem : MonoBehaviour
     {
         I_TotalLv++;
         I_PuntosMejora -= I_Coste;
-        I_Coste = (int)(I_Coste * F_AumentoCoste);
+        I_Coste = Mathf.RoundToInt(I_Coste * F_AumentoCoste);
         UpdateText();
         foreach (Upgrade u in Up_Upgrades)
         {

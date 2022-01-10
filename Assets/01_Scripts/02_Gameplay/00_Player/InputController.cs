@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
@@ -33,11 +29,6 @@ public class InputController : MonoBehaviour
         else if (current != this)
             Destroy(this);
 
-
-    }
-
-    private void OnEnable()
-    {
         Application.targetFrameRate = 60;
         InputManager = new GameInputManager();
         //Asignar referencias por si acaso y activar el movimiento del player
@@ -57,8 +48,11 @@ public class InputController : MonoBehaviour
 
         //Setear el cambio de rotación con el input, started y canceled no aplican por el tipo de input
         InputManager.Player.Shooting.performed += Rotate;
+        
 
     }
+
+   
 
     void Move(InputAction.CallbackContext call) //Modificar y editar placeholder de movimiento
     {
