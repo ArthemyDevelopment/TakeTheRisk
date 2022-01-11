@@ -161,7 +161,18 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0d98ba49-3567-46e8-ac1d-ce2c5d70b39b"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Healing"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05d7a04f-10e7-4e5a-a907-6db0d43b5525"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -172,7 +183,18 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a6a8947f-a853-41a1-813d-d732a28b124c"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Parry"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""08df8430-fb3e-4793-8006-e47653b35ff1"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -183,7 +205,18 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9bdfdc22-6be8-44b0-ae12-2c5b852cc7c9"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelfDamage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c10137ef-fc1e-432f-9cf8-71223bf59fd0"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

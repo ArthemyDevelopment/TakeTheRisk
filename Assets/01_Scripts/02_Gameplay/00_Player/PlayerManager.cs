@@ -14,9 +14,16 @@ public class PlayerManager : MonoBehaviour
 
     
     //----------------------PLAYER STATS----------------------------//
-    [FoldoutGroup("Player Stats"),Title("Health", titleAlignment: TitleAlignments.Centered)]
+
+    [FoldoutGroup("Player Stats"), Title("Health", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Player Stats")]public int I_MaxHealth;
-    [FoldoutGroup("Player Stats")]public int I_ActHealth;
+    [FoldoutGroup("Player Stats")][SerializeField]private int _actHealth;
+    [FoldoutGroup("Player Stats")]public int I_ActHealth
+    {
+        get => _actHealth;
+        set => HealthCheck(value);
+    }
+
     [FoldoutGroup("Player Stats"),Title("Damage", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Player Stats")] public int I_BaseDamage;
     [FoldoutGroup("Player Stats")]public float F_DamageScale;
@@ -25,12 +32,14 @@ public class PlayerManager : MonoBehaviour
     [FoldoutGroup("Player Stats")]public int I_Healling;
     [FoldoutGroup("Player Stats")]public int I_ActHeals;
     [FoldoutGroup("Player Stats")]public int I_MaxHeals;
+    [FoldoutGroup("Player Stats"), ShowInInspector, ReadOnly][SerializeField]private bool B_CanSufferDmg = true;
     [FoldoutGroup("Player Stats"),ShowInInspector, ReadOnly]private bool B_CanHeal = true;
     [FoldoutGroup("Player Stats"),Title("Parry", titleAlignment: TitleAlignments.Centered)] 
     [FoldoutGroup("Player Stats")]public float F_ParryTime;
     [FoldoutGroup("Player Stats")]public float F_ParryDuration;
     [FoldoutGroup("Player Stats")]public float F_ParryCD;
     [FoldoutGroup("Player Stats"),ShowInInspector, ReadOnly]private bool B_CanParry = true;
+    [FoldoutGroup("Player Stats")] [SerializeField] private GameObject G_ParryArea;
     [FoldoutGroup("Player Stats"), Title("Self Damage", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Player Stats")] public int I_SelfDamage;
     [FoldoutGroup("Player Stats"), ShowInInspector, ReadOnly] private bool B_CanSelfDamage = true;
@@ -53,6 +62,9 @@ public class PlayerManager : MonoBehaviour
     [FoldoutGroup("GUI")][SerializeField] private RectTransform Rt_LifeBar;
     [FoldoutGroup("GUI")][SerializeField] private TMP_Text Tx_Heals;
     
+    //-------------------Other References-----------------//
+    [FoldoutGroup("Other References")] [SerializeField] private List<Material> M_ShipMaterials;
+    
 
 
     void Awake()
@@ -66,6 +78,9 @@ public class PlayerManager : MonoBehaviour
     private void Start() //Setear input para actualizar dirección de los disparos y resetar vida
     {
         InputController.current.InputManager.Player.Shooting.performed += ShootAngle;
+        InputController.current.InputManager.Player.Healing.performed += Heal;
+        InputController.current.InputManager.Player.Parry.performed += Parry;
+        InputController.current.InputManager.Player.SelfDamage.performed += SelfDmg;
         I_ActHealth = I_MaxHealth;
         SetDamage();
         SetPool();
@@ -85,8 +100,18 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    #region Initial configuration
+    #region BasicsMethods
 
+    void HealthCheck(int i)
+    {
+        _actHealth = i;
+        if (_actHealth > I_MaxHealth)
+            _actHealth = I_MaxHealth;
+        else if(_actHealth <= 0)
+            Death();
+        
+    }
+    
     private void SetPool() //Iniciacion del object pool de balas
     {
         for (int i = 0; i < I_BulletPoolSize; i++)
@@ -101,7 +126,23 @@ public class PlayerManager : MonoBehaviour
         I_ActDamage = (int)temp;
         
     }
-
+    
+    
+    IEnumerator Invencibility(float t)
+    {
+        B_CanSufferDmg = false;
+        foreach (Material m in M_ShipMaterials)
+        {
+            m.color = new Color(m.color.r, m.color.g, m.color.b, 0.7f);
+        }
+        yield return new WaitForSeconds(t);
+        foreach (Material m in M_ShipMaterials)
+        {
+            m.color = new Color(m.color.r, m.color.g, m.color.b, 1);
+        }
+        B_CanSufferDmg = true;
+    }
+    
     #endregion
     
     #region Shooting
@@ -145,9 +186,11 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy/Bullet"))
+        if (other.CompareTag("Enemy/Bullet") && B_CanSufferDmg)
         {
-            
+            B_CanSufferDmg = false;
+            ApplyDamage(other.GetComponent<EnemyBullet>().I_Damage);
+            BulletPool.current.StoreBullet(other.gameObject);
         }
     }
 
@@ -160,6 +203,7 @@ public class PlayerManager : MonoBehaviour
         else
         {
             I_ActHealth -= i;
+            StartCoroutine(Invencibility(0.3f));
             UpdateHud();
         }
     }
@@ -167,6 +211,24 @@ public class PlayerManager : MonoBehaviour
     void Death()
     {
         
+    }
+
+    void SelfDmg(InputAction.CallbackContext call)
+    {
+        if (B_CanSelfDamage && I_ActHealth > I_SelfDamage)
+        {
+            B_CanSelfDamage = false;
+            I_ActHealth -= I_SelfDamage;
+            SetDamage();
+            UpdateHud();
+            StartCoroutine(SelfDmgCD());
+        }
+    }
+
+    IEnumerator SelfDmgCD()
+    {
+        yield return new WaitForSeconds(0.2f);
+        B_CanSelfDamage = true;
     }
 
     #endregion
@@ -190,6 +252,63 @@ public class PlayerManager : MonoBehaviour
 
     
 
+    #endregion
+
+    #region Healling
+
+    public void Heal(InputAction.CallbackContext call)
+    {
+        if (B_CanHeal && I_ActHeals != 0)
+        {
+            B_CanHeal = false;
+            StartCoroutine(HealCD());
+            I_ActHeals--;
+            I_ActHealth += I_Healling;
+            UpdateHud();
+        }
+        
+        
+    }
+
+    IEnumerator HealCD()
+    {
+        yield return new WaitForSeconds(0.5f);
+        B_CanHeal = true;
+    }
+
+    #endregion
+    
+    #region Parry
+
+    public void Parry(InputAction.CallbackContext call)
+    {
+        if (B_CanParry)
+        {
+            B_CanParry = false;
+            StartCoroutine(ParryCD());
+            StartCoroutine(ActiveParry());
+
+        }
+    }
+
+    public void SuccesParry()
+    {
+        StartCoroutine(Invencibility(F_ParryDuration));
+    }
+
+    IEnumerator ParryCD()
+    {
+        yield return new WaitForSeconds(F_ParryCD);
+        B_CanParry = true;
+    }
+
+    IEnumerator ActiveParry()
+    {
+        G_ParryArea.SetActive(true);
+        yield return new WaitForSeconds(F_ParryTime);
+        G_ParryArea.SetActive(false);
+    }
+    
     #endregion
 
 }
