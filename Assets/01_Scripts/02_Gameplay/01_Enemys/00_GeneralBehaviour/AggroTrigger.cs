@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class AggroTrigger : MonoBehaviour
@@ -8,11 +9,32 @@ public class AggroTrigger : MonoBehaviour
         if (other.CompareTag("Enemy/Hitbox"))
         {
             StateMachine.B_CanAggro = false;
+            
             StateMachine.enemyState = EnemyStateMachine.EnemyState.Follow;
         }
 
         if (other.CompareTag("Player/Collider") && StateMachine.enemyState != EnemyStateMachine.EnemyState.Shooting)
             StateMachine.enemyState = EnemyStateMachine.EnemyState.Back;
+        else
+        {
+            StateMachine.enemyState = EnemyStateMachine.EnemyState.Follow;
+            StateMachine.B_CanAggro = false;
+        }
+
+
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.CompareTag("Player/Collider"))
+        {
+            StateMachine.B_CanAggro = true;
+        }
+
+        if (other.CompareTag("Enemy/Hitbox") && StateMachine.enemyState == EnemyStateMachine.EnemyState.Back)
+        {
+            StateMachine.B_CanAggro = true;
+        }
         
     }
 
@@ -20,34 +42,40 @@ public class AggroTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player/Collider"))
         {
-            
-            if (StateMachine.enemyState == EnemyStateMachine.EnemyState.Idle)
+            switch (StateMachine.enemyState)
             {
-                StateMachine.B_CanAggro = true;
-                StateMachine.enemyState = EnemyStateMachine.EnemyState.Aggro;
+                case EnemyStateMachine.EnemyState.Idle:
+                    StateMachine.enemyState = EnemyStateMachine.EnemyState.Aggro; 
+                    break;
+                case EnemyStateMachine.EnemyState.Shooting:
+                    
+                    
+                    break;
+                case EnemyStateMachine.EnemyState.Aggro:
+                    
+                    
+                    break;
+                case EnemyStateMachine.EnemyState.Follow:
+                    if(StateMachine.B_CanShoot)
+                        StateMachine.enemyState = EnemyStateMachine.EnemyState.Shooting;
+                    else
+                        StateMachine.enemyState = EnemyStateMachine.EnemyState.Aggro;
+                    break;
+                case EnemyStateMachine.EnemyState.Back:
+                    if (StateMachine.B_CanAggro)
+                    {
+                        if(StateMachine.B_CanShoot)
+                            StateMachine.enemyState = EnemyStateMachine.EnemyState.Shooting;
+                        else
+                            StateMachine.enemyState = EnemyStateMachine.EnemyState.Aggro;
+                    }
+                    break;
+
             }
-            else if (StateMachine.enemyState == EnemyStateMachine.EnemyState.Follow)
-                StateMachine.enemyState = EnemyStateMachine.EnemyState.Aggro;
-            
-            else if (StateMachine.enemyState == EnemyStateMachine.EnemyState.Back)
-            {
-                if (StateMachine.B_CanAggro)
-                    StateMachine.enemyState = EnemyStateMachine.EnemyState.Aggro;
-                
-                else
-                    StateMachine.B_CanAggro = true;
-            }
-            
+
         }
 
-        if (other.CompareTag("Enemy/Hitbox"))
-        {
-            if (StateMachine.B_CanAggro)
-                StateMachine.enemyState = EnemyStateMachine.EnemyState.Aggro;
-            else
-                StateMachine.B_CanAggro = true;
 
-        }
         
     }
 }

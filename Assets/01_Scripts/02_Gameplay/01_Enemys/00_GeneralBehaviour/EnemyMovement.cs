@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,14 +11,12 @@ public class EnemyMovement : MonoBehaviour
 
     public void OnShooting()
     {
-        
+        B_FollowPlayer = true;
     }
 
     public void OnAggro()
     {
-        if (ESM.B_CanAggro)
-            B_FollowPlayer = true;
-        
+        B_FollowPlayer = true;
     }
 
     public void OnFollow()

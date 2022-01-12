@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,6 +14,7 @@ public class EnemyStateMachine : MonoBehaviour
     }
 
     public bool B_CanAggro = true;
+    public bool B_CanShoot = true;
     
     [SerializeField]private EnemyState m_enemyState;
 
@@ -63,6 +63,7 @@ public class EnemyStateMachine : MonoBehaviour
 
     public void ExitShooting()
     {
+        B_CanShoot = false;
         switch (B_CanAggro)
         {
             case true:
@@ -70,6 +71,7 @@ public class EnemyStateMachine : MonoBehaviour
                 break;
             case false:
                 enemyState = EnemyState.Back;
+                B_CanAggro = true;
                 break;
         }
     }

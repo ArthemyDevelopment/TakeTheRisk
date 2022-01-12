@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class ShootingTrigger : MonoBehaviour
@@ -8,8 +7,10 @@ public class ShootingTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player/Collider"))
         {
-            if(StateMachine.enemyState == EnemyStateMachine.EnemyState.Aggro)
-                StateMachine.enemyState = EnemyStateMachine.EnemyState.Shooting;
+            StateMachine.B_CanShoot = true;
+        if(StateMachine.enemyState == EnemyStateMachine.EnemyState.Aggro)
+            StateMachine.enemyState = EnemyStateMachine.EnemyState.Shooting;
+            
         }
     }
 

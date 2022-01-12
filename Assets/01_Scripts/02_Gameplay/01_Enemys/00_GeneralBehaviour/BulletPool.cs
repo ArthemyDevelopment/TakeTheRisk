@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +6,7 @@ public class BulletPool : MonoBehaviour
     public static BulletPool current;
 
     public GameObject G_BulletPrefab;
-    public Queue<GameObject> Q_EnemyBullets;
+    public Queue<GameObject> Q_EnemyBullets = new Queue<GameObject>();
 
 
     private void Awake()
@@ -20,22 +18,22 @@ public class BulletPool : MonoBehaviour
     }
 
 
-    public GameObject GetBullet()
+    public GameObject GetBullet() //Solicitar una bala a la pool
     {
         if (Q_EnemyBullets.Count != 0)
         {
             GameObject temp = Q_EnemyBullets.Dequeue();
-            temp.SetActive(true);
             return temp;
         }
         else
         {
             GameObject temp = Instantiate(G_BulletPrefab);
+            temp.SetActive(false);
             return temp;
         }
     }
 
-    public void StoreBullet(GameObject b)
+    public void StoreBullet(GameObject b) //Regresar una bala a la pool
     {
         b.SetActive(false);
         Q_EnemyBullets.Enqueue(b);

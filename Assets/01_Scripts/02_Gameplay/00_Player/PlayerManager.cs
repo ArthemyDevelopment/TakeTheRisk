@@ -9,21 +9,17 @@ using UnityEngine.InputSystem;
 [DefaultExecutionOrder(0)]
 public class PlayerManager : MonoBehaviour
 {
+    #region Vars
 
     public static PlayerManager current;
 
     
-    //----------------------PLAYER STATS----------------------------//
+    #region ----------------------PLAYER STATS----------------------------
 
     [FoldoutGroup("Player Stats"), Title("Health", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Player Stats")]public int I_MaxHealth;
     [FoldoutGroup("Player Stats")][SerializeField]private int _actHealth;
-    [FoldoutGroup("Player Stats")]public int I_ActHealth
-    {
-        get => _actHealth;
-        set => HealthCheck(value);
-    }
-
+    [FoldoutGroup("Player Stats")]public int I_ActHealth { get => _actHealth; set => HealthCheck(value);}
     [FoldoutGroup("Player Stats"),Title("Damage", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Player Stats")] public int I_BaseDamage;
     [FoldoutGroup("Player Stats")]public float F_DamageScale;
@@ -45,8 +41,9 @@ public class PlayerManager : MonoBehaviour
     [FoldoutGroup("Player Stats"), ShowInInspector, ReadOnly] private bool B_CanSelfDamage = true;
     [FoldoutGroup("Player Stats"),Title("Player Level", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Player Stats"), ShowInInspector,ReadOnly, PropertySpace(SpaceAfter = 15)]private int I_ActLv;
+    #endregion
     
-    //----------------------Shooting----------------------------//
+    #region ----------------------Shooting----------------------------
     [FoldoutGroup("Shooting"), Title("Bullet", titleAlignment: TitleAlignments.Centered)] public GameObject G_BulletPrefab;
     [FoldoutGroup("Shooting")] public int I_BulletPoolSize;
     [FoldoutGroup("Shooting")] public Queue<GameObject> Q_BulletPool = new Queue<GameObject>();
@@ -56,18 +53,23 @@ public class PlayerManager : MonoBehaviour
     [FoldoutGroup("Shooting"), ShowInInspector, ReadOnly] private bool B_CanShoot = true;
     [FoldoutGroup("Shooting"), ShowInInspector, ReadOnly] private bool B_IsShooting = false;
     [FoldoutGroup("Shooting"), ShowInInspector, ReadOnly, PropertySpace(SpaceAfter = 15)] private float F_ShootAngle;
-
-    //----------------------GUI----------------------------//
+    #endregion
+    
+    #region ----------------------GUI----------------------------
     [FoldoutGroup("GUI")][SerializeField] private Slider Sl_LifeBar;
     [FoldoutGroup("GUI")][SerializeField] private RectTransform Rt_LifeBar;
     [FoldoutGroup("GUI")][SerializeField] private TMP_Text Tx_Heals;
+    #endregion
     
-    //-------------------Other References-----------------//
+    #region -------------------Other References-----------------
     [FoldoutGroup("Other References")] [SerializeField] private List<Material> M_ShipMaterials;
+    #endregion
     
+    #endregion
 
-
-    void Awake()
+    #region Unity Methods
+    
+    void Awake() //Setear singleton
     {
         if (!current)
             current = this;
@@ -75,7 +77,7 @@ public class PlayerManager : MonoBehaviour
             Destroy(this);
     }
 
-    private void Start() //Setear input para actualizar dirección de los disparos y resetar vida
+    private void Start() //Setear input para actualizar direccion de los disparos y resetar vida
     {
         InputController.current.InputManager.Player.Shooting.performed += ShootAngle;
         InputController.current.InputManager.Player.Healing.performed += Heal;
@@ -99,16 +101,21 @@ public class PlayerManager : MonoBehaviour
             StartCoroutine(ShootDelay());
         }
     }
+    
+    #endregion
 
     #region BasicsMethods
 
-    void HealthCheck(int i)
+    void HealthCheck(int i) //en cada cambio del valor de vida, comprueba que no supere la vida maxima y si la vida baja a/o 0, la setea en cero y llama al metodo de muerte
     {
         _actHealth = i;
         if (_actHealth > I_MaxHealth)
             _actHealth = I_MaxHealth;
-        else if(_actHealth <= 0)
+        else if (_actHealth <= 0)
+        {
+            _actHealth = 0;
             Death();
+        }
         
     }
     
@@ -120,7 +127,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
     
-    public void SetDamage() //Configura daño del player considerando un porcentaje de vida faltante
+    public void SetDamage() //Configura dano del player considerando un porcentaje de vida faltante
     {
         float temp = I_BaseDamage + ((I_MaxHealth-I_ActHealth)* F_DamageScale);
         I_ActDamage = (int)temp;
@@ -128,7 +135,7 @@ public class PlayerManager : MonoBehaviour
     }
     
     
-    IEnumerator Invencibility(float t)
+    IEnumerator Invencibility(float t) //Corutina que controla los periodos de invencibilidad, ya sea por parry como por dano
     {
         B_CanSufferDmg = false;
         foreach (Material m in M_ShipMaterials)
@@ -164,7 +171,11 @@ public class PlayerManager : MonoBehaviour
         if (Q_BulletPool.Count != 0)
             return Q_BulletPool.Dequeue();
         else
-            return Instantiate(G_BulletPrefab);
+        {
+            GameObject temp = Instantiate(G_BulletPrefab);
+            temp.SetActive(false);
+            return temp;
+        }
 
     }
 
@@ -184,7 +195,7 @@ public class PlayerManager : MonoBehaviour
 
     #region Damage
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) //Comprueba la colision con una bala
     {
         if (other.CompareTag("Enemy/Bullet") && B_CanSufferDmg)
         {
@@ -194,26 +205,20 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    void ApplyDamage(int i)
+    void ApplyDamage(int i) //Aplica el dano segun el stat dado por la bala enemiga
     {
-        if (I_ActHealth <= i)
-        {
-            Death();
-        }
-        else
-        {
+
             I_ActHealth -= i;
             StartCoroutine(Invencibility(0.3f));
             UpdateHud();
-        }
     }
 
-    void Death()
+    void Death() //Controla los comportamientos de muerte
     {
         
     }
 
-    void SelfDmg(InputAction.CallbackContext call)
+    void SelfDmg(InputAction.CallbackContext call) //Input de self damage
     {
         if (B_CanSelfDamage && I_ActHealth > I_SelfDamage)
         {
@@ -225,7 +230,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    IEnumerator SelfDmgCD()
+    IEnumerator SelfDmgCD()// Corutina delay para SelfDamage
     {
         yield return new WaitForSeconds(0.2f);
         B_CanSelfDamage = true;
@@ -235,7 +240,7 @@ public class PlayerManager : MonoBehaviour
     
     #region HUD
 
-    public void UpdateHud()
+    public void UpdateHud() //Actualizar la informacion del HUD
     {
         Sl_LifeBar.maxValue = I_MaxHealth;
         Sl_LifeBar.value = I_ActHealth;
@@ -245,7 +250,7 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    int HealthBarMap(int value)
+    int HealthBarMap(int value)//Actualizar la barra de vida
     {
         return (value - 100) * (1250 - 300) / (1354 - 100) + 300;
     }
@@ -256,7 +261,7 @@ public class PlayerManager : MonoBehaviour
 
     #region Healling
 
-    public void Heal(InputAction.CallbackContext call)
+    public void Heal(InputAction.CallbackContext call) //Input de curarse
     {
         if (B_CanHeal && I_ActHeals != 0)
         {
@@ -270,7 +275,7 @@ public class PlayerManager : MonoBehaviour
         
     }
 
-    IEnumerator HealCD()
+    IEnumerator HealCD()//Delay para curarse
     {
         yield return new WaitForSeconds(0.5f);
         B_CanHeal = true;
@@ -280,7 +285,7 @@ public class PlayerManager : MonoBehaviour
     
     #region Parry
 
-    public void Parry(InputAction.CallbackContext call)
+    public void Parry(InputAction.CallbackContext call) //Input de Parry
     {
         if (B_CanParry)
         {
@@ -291,18 +296,18 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void SuccesParry()
+    public void SuccesParry()//Control de lograr el parry
     {
         StartCoroutine(Invencibility(F_ParryDuration));
     }
 
-    IEnumerator ParryCD()
+    IEnumerator ParryCD()//Delay para hacer parry
     {
         yield return new WaitForSeconds(F_ParryCD);
         B_CanParry = true;
     }
 
-    IEnumerator ActiveParry()
+    IEnumerator ActiveParry() //Activar objeto de trigger de parry
     {
         G_ParryArea.SetActive(true);
         yield return new WaitForSeconds(F_ParryTime);
