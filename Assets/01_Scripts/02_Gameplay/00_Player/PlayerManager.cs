@@ -50,9 +50,9 @@ public class PlayerManager : MonoBehaviour
     [FoldoutGroup("Shooting"),Title("Shooting", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Shooting")] public Transform T_ShootingPoint;
     [FoldoutGroup("Shooting")] public float F_ShootDelay;
-    [FoldoutGroup("Shooting"), ShowInInspector, ReadOnly] private bool B_CanShoot = true;
-    [FoldoutGroup("Shooting"), ShowInInspector, ReadOnly] private bool B_IsShooting = false;
-    [FoldoutGroup("Shooting"), ShowInInspector, ReadOnly, PropertySpace(SpaceAfter = 15)] private float F_ShootAngle;
+    [FoldoutGroup("Shooting")][SerializeField, ReadOnly]public bool B_CanShoot = true;
+    [FoldoutGroup("Shooting")][SerializeField, ReadOnly] private bool B_IsShooting = false;
+    [FoldoutGroup("Shooting"), PropertySpace(SpaceAfter = 15)][SerializeField] private float F_ShootAngle;
     #endregion
     
     #region ----------------------GUI----------------------------
@@ -252,7 +252,7 @@ public class PlayerManager : MonoBehaviour
 
     int HealthBarMap(int value)//Actualizar la barra de vida
     {
-        return (value - 100) * (1250 - 300) / (1354 - 100) + 300;
+        return (value - 100) * (1250 - 300) / (1382 - 100) + 300;
     }
 
     

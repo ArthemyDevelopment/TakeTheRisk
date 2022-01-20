@@ -17,7 +17,9 @@ public class UpgradesSystem : MonoBehaviour
     [FoldoutGroup("Variables"), ShowInInspector, ReadOnly] private int I_TotalLv; //Suma total de niveles de mejora
     [FoldoutGroup("Variables")] public int I_PuntosMejora; //Cuantos puntos de mejora se tienen
     [FoldoutGroup("Variables")] public int I_Coste;  //Cuanto cuesta una nueva mejora
-    [FoldoutGroup("Variables")][SerializeField] private float F_AumentoCoste; //Por cuanto se multiplica el coste de mejora con cada nivel
+    [FoldoutGroup("Variables")][SerializeField]private float F_PrevValueScale; //Aumento de coste en base al valor anterior
+    [FoldoutGroup("Variables")][SerializeField]private float F_LvValueScale; //Aumento de coste en base al nivel
+    [FoldoutGroup("Variables")][SerializeField]private int I_FlatSumScale; //Aumento de coste en base a un valor plano
 
     [FoldoutGroup("References")] public List<Upgrade> Up_Upgrades; //Ref a todos los scripts de upgrades
     [FoldoutGroup("References")] public GameObject G_UpgradeMenuCanvas; //Ref al canvas del menu
@@ -25,6 +27,7 @@ public class UpgradesSystem : MonoBehaviour
     //Ref a todos los textos de las stats
     [FoldoutGroup("References/Points")] public TMP_Text Tx_TotalLv;
     [FoldoutGroup("References/Points")] public TMP_Text Tx_ActPoints;
+    [FoldoutGroup("References/Points")] public TMP_Text Tx_HudPoints;
     [FoldoutGroup("References/Points")] public TMP_Text Tx_ActCost;
     [FoldoutGroup("References/Stats")] public TMP_Text Tx_ActVida;
     [FoldoutGroup("References/Stats")] public TMP_Text Tx_MaxVida;
@@ -48,13 +51,11 @@ public class UpgradesSystem : MonoBehaviour
 
     private void Start()
     {
-        InputController.current.InputManager.Player.UpgradeMenu.performed += OpenUpgradeMenu; //Setear y asegurarse que el input este configurado
-        InputController.current.InputManager.UI.UpgradeMenu.performed += OpenUpgradeMenu; //Setear y asegurarse que el input este configurado
-        InputController.current.InputManager.UI.Cancel.performed += OpenUpgradeMenu; //Setear y asegurarse que el input este configurado
         UpdateText();
     }
+    
 
-    public void OpenUpgradeMenu(InputAction.CallbackContext call) //Abrir y cerra el menu de mejora
+    public void OpenUpgradeMenu() //Abrir y cerra el menu de mejora
     {
         switch (B_isOpen)
         {
@@ -130,7 +131,12 @@ public class UpgradesSystem : MonoBehaviour
     {
         I_TotalLv++;
         I_PuntosMejora -= I_Coste;
-        I_Coste = Mathf.RoundToInt(I_Coste * F_AumentoCoste);
+        if (I_TotalLv < 160)
+        {
+            int temp = Mathf.RoundToInt(I_Coste * F_PrevValueScale) + Mathf.RoundToInt((I_TotalLv+1) * F_LvValueScale) + I_FlatSumScale;
+            I_Coste = temp;
+        }
+        
         UpdateText();
         foreach (Upgrade u in Up_Upgrades)
         {
@@ -140,8 +146,12 @@ public class UpgradesSystem : MonoBehaviour
 
     void UpdateText() //Actualiza todos los textos con los valores actuales
     {
-        Tx_ActCost.text = I_Coste.ToString();
+        if (I_TotalLv < 160)
+            Tx_ActCost.text = I_Coste.ToString();
+        else
+            Tx_ActCost.text = "Max";
         Tx_ActPoints.text = I_PuntosMejora.ToString();
+        Tx_HudPoints.text = I_PuntosMejora.ToString();
         Tx_TotalLv.text = I_TotalLv.ToString();
         Tx_ActVida.text = PlayerManager.current.I_ActHealth.ToString();
         Tx_MaxVida.text = PlayerManager.current.I_MaxHealth.ToString();
@@ -156,6 +166,13 @@ public class UpgradesSystem : MonoBehaviour
         Tx_Parry.text = PlayerManager.current.F_ParryDuration.ToString("F2",CultureInfo.InvariantCulture);
 
 
+    }
+
+    public void GetPoints(int i)
+    {
+        I_PuntosMejora += i;
+        Tx_HudPoints.text = I_PuntosMejora.ToString();
+        
     }
 
 

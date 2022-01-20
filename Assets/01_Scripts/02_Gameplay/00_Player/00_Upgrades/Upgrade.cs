@@ -11,17 +11,12 @@ public class Upgrade : MonoBehaviour
      * el menu y cuando se mejora una stat.
      */
     
-    enum TypeOfUpgrade //Define como se aplicara el ratio de mejora, ya sea sumando, restando o multiplicando una cantidad
-    {
-        sum,
-        rest,
-        mult
-    }
     
-    
-    [SerializeField]private TypeOfUpgrade type_Upgrade; //Definir el tipo de mejora en cada objeto
+
     [SerializeField]private int I_ActLv; //Nivel actual de la mejora
-    [SerializeField]private float F_RatioMejora; //Por cuanto mejorara la mejora
+    [SerializeField]private float F_PrevValueScale; //Aumento de mejora en base al valor anterior
+    [SerializeField]private float F_LvValueScale; //Aumento de mejora en base al nivel
+    [SerializeField]private float F_FlatSumScale; //Aumento de mejora en base a un valor plano
     [SerializeField]private Button B_BotonMejora; //Ref al boton para mejorar
     [SerializeField]private TMP_Text Tx_Lv; //Ref al texto con el nivel
 
@@ -33,7 +28,7 @@ public class Upgrade : MonoBehaviour
 
     public void UpdateInfo() //Setear si se puede mejorar y el nivel
     {
-        if (I_ActLv < 10)
+        if (I_ActLv < 20)
         {
             B_BotonMejora.interactable = CanUpgrade();
             Tx_Lv.text = I_ActLv.ToString();
@@ -41,7 +36,7 @@ public class Upgrade : MonoBehaviour
         else
         {
             B_BotonMejora.gameObject.SetActive(false);
-            Tx_Lv.text = "10";
+            Tx_Lv.text = "20";
         }
     }
     
@@ -64,21 +59,10 @@ public class Upgrade : MonoBehaviour
     public float UpgradeStat(float f) //Se aplica el ratio de mejora segun el tipo si el valor es float, toma como parametro el valor actual y retorna el valor mejorado
     {
         float temp = 0;
-        switch (type_Upgrade)
-        {
-            case TypeOfUpgrade.sum:
-                temp = (f + F_RatioMejora);
-                break;
-            
-            case TypeOfUpgrade.rest:
-                temp = (f - F_RatioMejora);
-                break;
-            
-            case TypeOfUpgrade.mult:
-                temp = (f * F_RatioMejora);
-                break;
-        }
         I_ActLv++;
+        
+        temp = (f * F_PrevValueScale) + (I_ActLv * F_LvValueScale) + F_FlatSumScale;
+        
         return temp;
 
     }
@@ -86,22 +70,10 @@ public class Upgrade : MonoBehaviour
     public int UpgradeStat(int i) //Se aplica el ratio de mejora segun el tipo si el valor es int, toma como parametro el valor actual y retorna el valor mejorado
     {
         int temp = 0;
-        switch (type_Upgrade)
-        {
-            case TypeOfUpgrade.sum:
-                temp = (int)(i + F_RatioMejora);
-                break;
-            
-            case TypeOfUpgrade.rest:
-                temp = (int)(i - F_RatioMejora);
-                break;
-            
-            case TypeOfUpgrade.mult:
-                temp = (int)(i * F_RatioMejora);
-                break;
-        }
         I_ActLv++;
 
+        temp = Mathf.RoundToInt(i * F_PrevValueScale) + (int)(I_ActLv * F_LvValueScale) + (int)F_FlatSumScale;
+        
         return temp;
     }
 

@@ -58,15 +58,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "UpgradeMenu",
-                    "type": "Button",
-                    "id": "a850934f-2f3c-41bc-afd3-d44a581e0fc0",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -289,28 +280,6 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fc30e9fd-ae6a-4a8e-badc-c8bd4f230625",
-                    "path": "<Keyboard>/p",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "UpgradeMenu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4726a67e-1c84-49bd-8b0d-e60dac75aabe",
-                    "path": "<Gamepad>/select",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "UpgradeMenu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },
@@ -328,7 +297,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "UpgradeMenu",
+                    "name": "SafepointMenu",
                     "type": "Button",
                     "id": "3edd856b-34c6-46fd-b9b0-f920e77e5aa1",
                     "expectedControlType": "Button",
@@ -804,7 +773,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "UpgradeMenu",
+                    "action": "SafepointMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -815,7 +784,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "UpgradeMenu",
+                    "action": "SafepointMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

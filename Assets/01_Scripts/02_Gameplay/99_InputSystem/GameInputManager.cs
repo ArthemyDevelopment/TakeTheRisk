@@ -80,15 +80,6 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""UpgradeMenu"",
-                    ""type"": ""Button"",
-                    ""id"": ""a850934f-2f3c-41bc-afd3-d44a581e0fc0"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -311,28 +302,6 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fc30e9fd-ae6a-4a8e-badc-c8bd4f230625"",
-                    ""path"": ""<Keyboard>/p"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""UpgradeMenu"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4726a67e-1c84-49bd-8b0d-e60dac75aabe"",
-                    ""path"": ""<Gamepad>/select"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""UpgradeMenu"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -350,7 +319,7 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""UpgradeMenu"",
+                    ""name"": ""SafepointMenu"",
                     ""type"": ""Button"",
                     ""id"": ""3edd856b-34c6-46fd-b9b0-f920e77e5aa1"",
                     ""expectedControlType"": ""Button"",
@@ -826,7 +795,7 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""UpgradeMenu"",
+                    ""action"": ""SafepointMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -837,7 +806,7 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""UpgradeMenu"",
+                    ""action"": ""SafepointMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -877,11 +846,10 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
         m_Player_Parry = m_Player.FindAction("Parry", throwIfNotFound: true);
         m_Player_SelfDamage = m_Player.FindAction("SelfDamage", throwIfNotFound: true);
         m_Player_PauseMenu = m_Player.FindAction("PauseMenu", throwIfNotFound: true);
-        m_Player_UpgradeMenu = m_Player.FindAction("UpgradeMenu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
-        m_UI_UpgradeMenu = m_UI.FindAction("UpgradeMenu", throwIfNotFound: true);
+        m_UI_SafepointMenu = m_UI.FindAction("SafepointMenu", throwIfNotFound: true);
         m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
         m_UI_Cancel = m_UI.FindAction("Cancel", throwIfNotFound: true);
         m_UI_Point = m_UI.FindAction("Point", throwIfNotFound: true);
@@ -954,7 +922,6 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Parry;
     private readonly InputAction m_Player_SelfDamage;
     private readonly InputAction m_Player_PauseMenu;
-    private readonly InputAction m_Player_UpgradeMenu;
     public struct PlayerActions
     {
         private @GameInputManager m_Wrapper;
@@ -965,7 +932,6 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
         public InputAction @Parry => m_Wrapper.m_Player_Parry;
         public InputAction @SelfDamage => m_Wrapper.m_Player_SelfDamage;
         public InputAction @PauseMenu => m_Wrapper.m_Player_PauseMenu;
-        public InputAction @UpgradeMenu => m_Wrapper.m_Player_UpgradeMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -993,9 +959,6 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                 @PauseMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseMenu;
                 @PauseMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseMenu;
                 @PauseMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseMenu;
-                @UpgradeMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpgradeMenu;
-                @UpgradeMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpgradeMenu;
-                @UpgradeMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpgradeMenu;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1018,9 +981,6 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                 @PauseMenu.started += instance.OnPauseMenu;
                 @PauseMenu.performed += instance.OnPauseMenu;
                 @PauseMenu.canceled += instance.OnPauseMenu;
-                @UpgradeMenu.started += instance.OnUpgradeMenu;
-                @UpgradeMenu.performed += instance.OnUpgradeMenu;
-                @UpgradeMenu.canceled += instance.OnUpgradeMenu;
             }
         }
     }
@@ -1030,7 +990,7 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_UI;
     private IUIActions m_UIActionsCallbackInterface;
     private readonly InputAction m_UI_Navigate;
-    private readonly InputAction m_UI_UpgradeMenu;
+    private readonly InputAction m_UI_SafepointMenu;
     private readonly InputAction m_UI_Submit;
     private readonly InputAction m_UI_Cancel;
     private readonly InputAction m_UI_Point;
@@ -1043,7 +1003,7 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
         private @GameInputManager m_Wrapper;
         public UIActions(@GameInputManager wrapper) { m_Wrapper = wrapper; }
         public InputAction @Navigate => m_Wrapper.m_UI_Navigate;
-        public InputAction @UpgradeMenu => m_Wrapper.m_UI_UpgradeMenu;
+        public InputAction @SafepointMenu => m_Wrapper.m_UI_SafepointMenu;
         public InputAction @Submit => m_Wrapper.m_UI_Submit;
         public InputAction @Cancel => m_Wrapper.m_UI_Cancel;
         public InputAction @Point => m_Wrapper.m_UI_Point;
@@ -1063,9 +1023,9 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                 @Navigate.started -= m_Wrapper.m_UIActionsCallbackInterface.OnNavigate;
                 @Navigate.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnNavigate;
                 @Navigate.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnNavigate;
-                @UpgradeMenu.started -= m_Wrapper.m_UIActionsCallbackInterface.OnUpgradeMenu;
-                @UpgradeMenu.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnUpgradeMenu;
-                @UpgradeMenu.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnUpgradeMenu;
+                @SafepointMenu.started -= m_Wrapper.m_UIActionsCallbackInterface.OnSafepointMenu;
+                @SafepointMenu.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnSafepointMenu;
+                @SafepointMenu.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnSafepointMenu;
                 @Submit.started -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
                 @Submit.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
                 @Submit.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
@@ -1094,9 +1054,9 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
                 @Navigate.started += instance.OnNavigate;
                 @Navigate.performed += instance.OnNavigate;
                 @Navigate.canceled += instance.OnNavigate;
-                @UpgradeMenu.started += instance.OnUpgradeMenu;
-                @UpgradeMenu.performed += instance.OnUpgradeMenu;
-                @UpgradeMenu.canceled += instance.OnUpgradeMenu;
+                @SafepointMenu.started += instance.OnSafepointMenu;
+                @SafepointMenu.performed += instance.OnSafepointMenu;
+                @SafepointMenu.canceled += instance.OnSafepointMenu;
                 @Submit.started += instance.OnSubmit;
                 @Submit.performed += instance.OnSubmit;
                 @Submit.canceled += instance.OnSubmit;
@@ -1148,12 +1108,11 @@ public partial class @GameInputManager : IInputActionCollection2, IDisposable
         void OnParry(InputAction.CallbackContext context);
         void OnSelfDamage(InputAction.CallbackContext context);
         void OnPauseMenu(InputAction.CallbackContext context);
-        void OnUpgradeMenu(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
         void OnNavigate(InputAction.CallbackContext context);
-        void OnUpgradeMenu(InputAction.CallbackContext context);
+        void OnSafepointMenu(InputAction.CallbackContext context);
         void OnSubmit(InputAction.CallbackContext context);
         void OnCancel(InputAction.CallbackContext context);
         void OnPoint(InputAction.CallbackContext context);

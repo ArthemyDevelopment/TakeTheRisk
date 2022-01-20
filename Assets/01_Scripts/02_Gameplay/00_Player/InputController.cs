@@ -12,11 +12,12 @@ public class InputController : MonoBehaviour
     [SerializeField] private int I_VcamDefaul; //delay de seguimiento de la camara estando quieto
     [SerializeField] private int I_VcamMove; //delay de seguimiento de la camara moviendose
     [SerializeField] private float F_Velocity; //Velocidad de player
-    [SerializeField] private float F_RotationSmoothing; //Smoothing de rotacion del player 
+    [SerializeField] private float F_RotationSmoothing;
+    public bool B_CanMove = true;//Smoothing de rotacion del player 
     
     private Vector3 V3_Movement; //Placehodler del movimiento antes de aplicarlo
     private float F_LookAngle; //Angulo de rotación de la nave segun direccion de disparo
-    private Rigidbody Rb_PlayerRigidBody; //Ref del riggidbody
+    public Rigidbody Rb_PlayerRigidBody; //Ref del riggidbody
     private Transform T_PlayerTransform; //Ref del transform
 
     public GameInputManager InputManager; //Declarar el sistema de input
@@ -89,12 +90,12 @@ public class InputController : MonoBehaviour
 
     private void LateUpdate() //Actualizar rotación
     {
-        var obRot = Quaternion.Euler(0, -F_LookAngle, 0);
-        T_PlayerTransform.rotation = Quaternion.Lerp(T_PlayerTransform.rotation,obRot, Time.deltaTime * F_RotationSmoothing);
+        T_PlayerTransform.rotation = Quaternion.Lerp(T_PlayerTransform.rotation,Quaternion.Euler(0, -F_LookAngle, 0), Time.deltaTime * F_RotationSmoothing);
     }
 
     private void FixedUpdate() //Actualizar movimiento
     {
-        Rb_PlayerRigidBody.MovePosition(Rb_PlayerRigidBody.position + (V3_Movement * F_Velocity * Time.fixedDeltaTime));
+        if(B_CanMove)
+            Rb_PlayerRigidBody.MovePosition(Rb_PlayerRigidBody.position + (V3_Movement * F_Velocity * Time.fixedDeltaTime));
     }
 }
