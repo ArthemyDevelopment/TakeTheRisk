@@ -30,7 +30,7 @@ public class Upgrade : MonoBehaviour
     {
         if (I_ActLv < 20)
         {
-            B_BotonMejora.interactable = CanUpgrade();
+            B_BotonMejora.gameObject.SetActive(CanUpgrade());
             Tx_Lv.text = I_ActLv.ToString();
         }
         else
@@ -43,15 +43,11 @@ public class Upgrade : MonoBehaviour
     
     bool CanUpgrade() //Comprueba si hay suficientes puntos para mejorar
     {
-        if (UpgradesSystem.current.I_PuntosMejora != 0)
-        {
-            if (UpgradesSystem.current.I_Coste <= UpgradesSystem.current.I_PuntosMejora)
-            {
-                return true;
-            }
-            else
-                return false;
-        }
+        if (UpgradesSystem.current.I_PuntosMejora != 0 && 
+            UpgradesSystem.current.I_Coste <= UpgradesSystem.current.I_PuntosMejora && 
+            UpgradesSystem.current.B_CanUpgrade)
+            return true;
+
         else
             return false;
     }

@@ -20,6 +20,7 @@ public class PlayerManager : MonoBehaviour
     [FoldoutGroup("Player Stats")]public int I_MaxHealth;
     [FoldoutGroup("Player Stats")][SerializeField]private int _actHealth;
     [FoldoutGroup("Player Stats")]public int I_ActHealth { get => _actHealth; set => HealthCheck(value);}
+    [FoldoutGroup("Player Stats")] private bool B_isDeath;
     [FoldoutGroup("Player Stats"),Title("Damage", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Player Stats")] public int I_BaseDamage;
     [FoldoutGroup("Player Stats")]public float F_DamageScale;
@@ -62,7 +63,7 @@ public class PlayerManager : MonoBehaviour
     #endregion
     
     #region -------------------Other References-----------------
-    [FoldoutGroup("Other References")] [SerializeField] private List<Material> M_ShipMaterials;
+    [FoldoutGroup("Other References")] [SerializeField] private Renderer MR_PlayerMeshRenderer;
     #endregion
     
     #endregion
@@ -133,21 +134,31 @@ public class PlayerManager : MonoBehaviour
         I_ActDamage = (int)temp;
         
     }
-    
+
+    void ChangeMaterialsTransparency(float f) //Modifica la transparencia de la nave para el fin que sea necesario
+    {
+        foreach (Material m in MR_PlayerMeshRenderer.materials)
+        {
+            m.color = new Color(m.color.r, m.color.g, m.color.b, f);
+        }
+    }
     
     IEnumerator Invencibility(float t) //Corutina que controla los periodos de invencibilidad, ya sea por parry como por dano
     {
         B_CanSufferDmg = false;
-        foreach (Material m in M_ShipMaterials)
-        {
-            m.color = new Color(m.color.r, m.color.g, m.color.b, 0.7f);
-        }
+        ChangeMaterialsTransparency(0.3f);
         yield return new WaitForSeconds(t);
-        foreach (Material m in M_ShipMaterials)
+        if (!B_isDeath)
         {
-            m.color = new Color(m.color.r, m.color.g, m.color.b, 1);
+            ChangeMaterialsTransparency(1f);
+            B_CanSufferDmg = true;
         }
-        B_CanSufferDmg = true;
+    }
+
+    public void ResetHealth()
+    {
+        I_ActHealth = I_MaxHealth;
+        I_ActHeals = I_MaxHeals;
     }
     
     #endregion
@@ -197,7 +208,7 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) //Comprueba la colision con una bala
     {
-        if (other.CompareTag("Enemy/Bullet") && B_CanSufferDmg)
+        if (other.CompareTag("Enemy/Bullet") && B_CanSufferDmg && !B_isDeath)
         {
             B_CanSufferDmg = false;
             ApplyDamage(other.GetComponent<EnemyBullet>().I_Damage);
@@ -211,11 +222,6 @@ public class PlayerManager : MonoBehaviour
             I_ActHealth -= i;
             StartCoroutine(Invencibility(0.3f));
             UpdateHud();
-    }
-
-    void Death() //Controla los comportamientos de muerte
-    {
-        
     }
 
     void SelfDmg(InputAction.CallbackContext call) //Input de self damage
@@ -254,8 +260,7 @@ public class PlayerManager : MonoBehaviour
     {
         return (value - 100) * (1250 - 300) / (1382 - 100) + 300;
     }
-
-    
+   
 
     #endregion
 
@@ -296,7 +301,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void SuccesParry()//Control de lograr el parry
+    public void SuccesParry()//Control de lograr el parry TODO:Terminar el sistema de parry
     {
         StartCoroutine(Invencibility(F_ParryDuration));
     }
@@ -316,4 +321,35 @@ public class PlayerManager : MonoBehaviour
     
     #endregion
 
+    #region DeathSystem
+    
+    void Death() //Controla los comportamientos de muerte
+    {
+        B_isDeath = true;
+        //TODO:DestoyedParticles
+        ChangeMaterialsTransparency(0f);
+        B_CanSufferDmg = false;
+        B_CanShoot = false;
+        B_CanHeal = false;
+        B_CanSelfDamage = false;
+        B_CanParry = false;
+        InputController.current.B_CanMove = false;
+        StartCoroutine(PlayerRespawnManager.current.OnPlayerDeath());
+    }
+    
+    public void ResetPlayer(Transform safePoint) //Resetea al Player despues de morir
+    {
+        transform.position = safePoint.position;
+        ChangeMaterialsTransparency(1f);
+        B_CanSufferDmg = true;
+        B_CanShoot = true;
+        B_CanHeal = true;
+        B_CanSelfDamage = true;
+        B_CanParry = true;
+        InputController.current.B_CanMove = true;
+        ResetHealth();
+        B_isDeath = false;
+    }
+    
+    #endregion
 }

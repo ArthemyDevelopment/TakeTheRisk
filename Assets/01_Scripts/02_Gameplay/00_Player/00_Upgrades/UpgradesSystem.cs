@@ -14,6 +14,7 @@ public class UpgradesSystem : MonoBehaviour
     public static UpgradesSystem current;//Singleton
     
     [FoldoutGroup("Variables"), ShowInInspector, ReadOnly] private bool B_isOpen; //Comprueba si se abrio el menu
+    [FoldoutGroup("Variables"), ReadOnly] public bool B_CanUpgrade; //Comprueba si se puede upgradear
     [FoldoutGroup("Variables"), ShowInInspector, ReadOnly] private int I_TotalLv; //Suma total de niveles de mejora
     [FoldoutGroup("Variables")] public int I_PuntosMejora; //Cuantos puntos de mejora se tienen
     [FoldoutGroup("Variables")] public int I_Coste;  //Cuanto cuesta una nueva mejora
@@ -52,8 +53,15 @@ public class UpgradesSystem : MonoBehaviour
     private void Start()
     {
         UpdateText();
+
+        InputController.current.InputManager.Player.UpgradeMenu.performed += OpenUpgradeMenu;
     }
-    
+
+    private void OpenUpgradeMenu(InputAction.CallbackContext obj)//Middle point entre la deteccion de input y el methodo de abrir el menu
+    {
+        OpenUpgradeMenu();
+    }
+
 
     public void OpenUpgradeMenu() //Abrir y cerra el menu de mejora
     {
@@ -168,7 +176,7 @@ public class UpgradesSystem : MonoBehaviour
 
     }
 
-    public void GetPoints(int i)
+    public void GetPoints(int i) //Metodo para obtener los puntos al derrotar a un enemigo
     {
         I_PuntosMejora += i;
         Tx_HudPoints.text = I_PuntosMejora.ToString();
