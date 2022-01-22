@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -57,6 +58,14 @@ public class EnemyStateMachine : MonoBehaviour
             
             default:
                 break;
+        }
+    }
+
+    private void Update()
+    {
+        if (enemyState == EnemyState.Shooting && PlayerManager.current.B_isDeath)
+        {
+            enemyState = EnemyState.Back;
         }
     }
 

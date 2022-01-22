@@ -13,8 +13,6 @@ public class EnemyBullet : MonoBehaviour
     {
         V3_StartPos = transform.position;
         F_Dist = 0;
-        Debug.Log(F_Dist, gameObject);
-        Debug.Log(V3_StartPos, gameObject);
     }
 
     private void Update()

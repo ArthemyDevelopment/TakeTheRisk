@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,7 +21,7 @@ public class PlayerManager : MonoBehaviour
     [FoldoutGroup("Player Stats")]public int I_MaxHealth;
     [FoldoutGroup("Player Stats")][SerializeField]private int _actHealth;
     [FoldoutGroup("Player Stats")]public int I_ActHealth { get => _actHealth; set => HealthCheck(value);}
-    [FoldoutGroup("Player Stats")] private bool B_isDeath;
+    [FoldoutGroup("Player Stats")] public bool B_isDeath;
     [FoldoutGroup("Player Stats"),Title("Damage", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Player Stats")] public int I_BaseDamage;
     [FoldoutGroup("Player Stats")]public float F_DamageScale;
@@ -64,6 +65,7 @@ public class PlayerManager : MonoBehaviour
     
     #region -------------------Other References-----------------
     [FoldoutGroup("Other References")] [SerializeField] private Renderer MR_PlayerMeshRenderer;
+    
     #endregion
     
     #endregion
@@ -145,11 +147,11 @@ public class PlayerManager : MonoBehaviour
     
     IEnumerator Invencibility(float t) //Corutina que controla los periodos de invencibilidad, ya sea por parry como por dano
     {
-        B_CanSufferDmg = false;
-        ChangeMaterialsTransparency(0.3f);
-        yield return new WaitForSeconds(t);
         if (!B_isDeath)
         {
+            B_CanSufferDmg = false;
+            ChangeMaterialsTransparency(0.3f);
+            yield return new WaitForSeconds(t);
             ChangeMaterialsTransparency(1f);
             B_CanSufferDmg = true;
         }
@@ -218,10 +220,10 @@ public class PlayerManager : MonoBehaviour
 
     void ApplyDamage(int i) //Aplica el dano segun el stat dado por la bala enemiga
     {
-
-            I_ActHealth -= i;
-            StartCoroutine(Invencibility(0.3f));
-            UpdateHud();
+        I_ActHealth -= i;
+        StartCoroutine(Invencibility(0.3f));
+        UpdateHud();
+        
     }
 
     void SelfDmg(InputAction.CallbackContext call) //Input de self damage
@@ -325,9 +327,9 @@ public class PlayerManager : MonoBehaviour
     
     void Death() //Controla los comportamientos de muerte
     {
-        B_isDeath = true;
         //TODO:DestoyedParticles
         ChangeMaterialsTransparency(0f);
+        B_isDeath = true;
         B_CanSufferDmg = false;
         B_CanShoot = false;
         B_CanHeal = false;
