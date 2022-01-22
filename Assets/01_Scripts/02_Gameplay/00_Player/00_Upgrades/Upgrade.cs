@@ -22,7 +22,6 @@ public class Upgrade : MonoBehaviour
 
     private void OnEnable()
     {
-
         UpdateInfo();
     }
 

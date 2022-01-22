@@ -25,7 +25,8 @@ public class PlayerManager : MonoBehaviour
     [FoldoutGroup("Player Stats"),Title("Damage", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Player Stats")] public int I_BaseDamage;
     [FoldoutGroup("Player Stats")]public float F_DamageScale;
-    [FoldoutGroup("Player Stats"), ReadOnly]public int I_ActDamage;
+    [FoldoutGroup("Player Stats"), ReadOnly] public int I_ActDamage => SetDamage();
+
     [FoldoutGroup("Player Stats"),Title("Heal", titleAlignment: TitleAlignments.Centered)] 
     [FoldoutGroup("Player Stats")]public int I_Healling;
     [FoldoutGroup("Player Stats")]public int I_ActHeals;
@@ -87,9 +88,8 @@ public class PlayerManager : MonoBehaviour
         InputController.current.InputManager.Player.Parry.performed += Parry;
         InputController.current.InputManager.Player.SelfDamage.performed += SelfDmg;
         I_ActHealth = I_MaxHealth;
-        SetDamage();
         SetPool();
-
+        UpdateHud();
     }
 
     private void Update() //Comprobar si se puede disparar y hacerlo cuando corresponda
@@ -130,10 +130,10 @@ public class PlayerManager : MonoBehaviour
         }
     }
     
-    public void SetDamage() //Configura dano del player considerando un porcentaje de vida faltante
+    public int SetDamage() //Configura dano del player considerando un porcentaje de vida faltante
     {
         float temp = I_BaseDamage + ((I_MaxHealth-I_ActHealth)* F_DamageScale);
-        I_ActDamage = (int)temp;
+        return (int)temp;
         
     }
 
@@ -232,7 +232,6 @@ public class PlayerManager : MonoBehaviour
         {
             B_CanSelfDamage = false;
             I_ActHealth -= I_SelfDamage;
-            SetDamage();
             UpdateHud();
             StartCoroutine(SelfDmgCD());
         }

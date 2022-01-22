@@ -52,8 +52,6 @@ public class UpgradesSystem : MonoBehaviour
 
     private void Start()
     {
-        UpdateText();
-
         InputController.current.InputManager.Player.UpgradeMenu.performed += OpenUpgradeMenu;
     }
 
@@ -72,6 +70,7 @@ public class UpgradesSystem : MonoBehaviour
                 InputController.current.InputManager.UI.Enable();
                 InputController.current.InputManager.Player.Disable();
                 B_isOpen = true;
+                UpdateText();
                 break;
             
             case true:
@@ -107,13 +106,11 @@ public class UpgradesSystem : MonoBehaviour
     public void UpgradeBaseDmg(Upgrade u)
         {
             PlayerManager.current.I_BaseDamage = u.UpgradeStat(PlayerManager.current.I_BaseDamage);
-            PlayerManager.current.SetDamage();
             UpgradeChanges();
         }
     public void UpgradeDmgScale(Upgrade u)
         {
             PlayerManager.current.F_DamageScale = u.UpgradeStat(PlayerManager.current.F_DamageScale);
-            PlayerManager.current.SetDamage();
             UpgradeChanges();
         }
     public void UpgradeNumHeals(Upgrade u)
