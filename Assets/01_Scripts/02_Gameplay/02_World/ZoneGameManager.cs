@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class ZoneGameManager : MonoBehaviour
 {
-    private List<EnemyController> EC_ZoneEnemies;
+    [SerializeField]private List<EnemyController> EC_ZoneEnemies;
 
 
 
 
     public void ResetEnemies()
     {
-        //Resetear los enemigos de la zona, respawneandolos, volviendolos a su lugar de origen, etc
+        foreach (EnemyController EC in EC_ZoneEnemies)
+        {
+            EC.ResetEnemy();
+        }
     }
 }

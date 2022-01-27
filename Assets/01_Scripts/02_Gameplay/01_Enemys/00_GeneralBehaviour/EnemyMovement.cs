@@ -7,7 +7,7 @@ public class EnemyMovement : MonoBehaviour
     
     [SerializeField] private NavMeshAgent Nav_Enemy;
     [SerializeField] private Transform T_Origin;
-    [SerializeField] private bool B_FollowPlayer = false;
+    public bool B_FollowPlayer = false;
 
     public void OnShooting()
     {

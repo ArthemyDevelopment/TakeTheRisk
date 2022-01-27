@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.Collections;
 using UnityEngine;
@@ -11,6 +12,12 @@ public class ShootingEnemy : MonoBehaviour
     [SerializeField]private float F_BulletSpeed;
     [SerializeField]private float F_FireRate;
 
+
+    private void OnEnable()
+    {
+        B_canShoot = true;
+        B_isShooting = false;
+    }
 
     private void Update()//Disparar cuando se cumplan las condiciones
     {
