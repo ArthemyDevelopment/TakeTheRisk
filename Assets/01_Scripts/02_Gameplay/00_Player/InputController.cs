@@ -17,6 +17,7 @@ public class InputController : MonoBehaviour
     
     private Vector3 V3_Movement; //Placehodler del movimiento antes de aplicarlo
     private float F_LookAngle; //Angulo de rotación de la nave segun direccion de disparo
+    private CharacterController CC_Player;
     public Rigidbody Rb_PlayerRigidBody; //Ref del riggidbody
     private Transform T_PlayerTransform; //Ref del transform
 
@@ -29,6 +30,10 @@ public class InputController : MonoBehaviour
             current = this;
         else if (current != this)
             Destroy(this);
+
+        CC_Player = GetComponent<CharacterController>();
+        CC_Player.detectCollisions = false;
+
 
         Application.targetFrameRate = 60;
         InputManager = new GameInputManager();
@@ -91,11 +96,12 @@ public class InputController : MonoBehaviour
     private void LateUpdate() //Actualizar rotación
     {
         T_PlayerTransform.rotation = Quaternion.Lerp(T_PlayerTransform.rotation,Quaternion.Euler(0, -F_LookAngle, 0), Time.deltaTime * F_RotationSmoothing);
+        if (B_CanMove)
+            CC_Player.SimpleMove(V3_Movement * F_Velocity);
     }
 
     private void FixedUpdate() //Actualizar movimiento
     {
-        if(B_CanMove)
-            Rb_PlayerRigidBody.MovePosition(Rb_PlayerRigidBody.position + (V3_Movement * F_Velocity * Time.fixedDeltaTime));
+        //Rb_PlayerRigidBody.MovePosition(Rb_PlayerRigidBody.position + (V3_Movement * F_Velocity * Time.fixedDeltaTime));
     }
 }

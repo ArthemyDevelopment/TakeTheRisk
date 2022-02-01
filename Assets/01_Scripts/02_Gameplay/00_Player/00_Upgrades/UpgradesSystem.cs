@@ -53,6 +53,9 @@ public class UpgradesSystem : MonoBehaviour
     private void Start()
     {
         InputController.current.InputManager.Player.UpgradeMenu.performed += OpenUpgradeMenu;
+        InputController.current.InputManager.UI.SafepointMenu.performed += OpenUpgradeMenu;
+        InputController.current.InputManager.UI.Cancel.performed += OpenUpgradeMenu;
+        UpdateText();
     }
 
     private void OpenUpgradeMenu(InputAction.CallbackContext obj)//Middle point entre la deteccion de input y el methodo de abrir el menu

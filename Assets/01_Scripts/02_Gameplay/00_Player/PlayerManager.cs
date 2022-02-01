@@ -5,6 +5,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [DefaultExecutionOrder(0)]
@@ -66,6 +67,14 @@ public class PlayerManager : MonoBehaviour
     
     #region -------------------Other References-----------------
     [FoldoutGroup("Other References")] [SerializeField] private Renderer MR_PlayerMeshRenderer;
+    [FoldoutGroup("Other References")] public Transform T_PlayerModel;
+    [FoldoutGroup("Other References")] public CharacterController CC_Player;
+    
+    
+    #region ---------------------Events---------------------
+
+    [FoldoutGroup("Events")] public UnityEvent Ev_OnPlayerDeath;
+    #endregion
     
     #endregion
     
@@ -161,6 +170,7 @@ public class PlayerManager : MonoBehaviour
     {
         I_ActHealth = I_MaxHealth;
         I_ActHeals = I_MaxHeals;
+        UpdateHud();
     }
     
     #endregion
@@ -328,6 +338,7 @@ public class PlayerManager : MonoBehaviour
     {
         //TODO:DestoyedParticles
         ChangeMaterialsTransparency(0f);
+        Ev_OnPlayerDeath.Invoke();
         B_isDeath = true;
         B_CanSufferDmg = false;
         B_CanShoot = false;
@@ -340,7 +351,9 @@ public class PlayerManager : MonoBehaviour
     
     public void ResetPlayer(Transform safePoint) //Resetea al Player despues de morir
     {
-        transform.position = safePoint.position;
+        CC_Player.enabled = false;
+        gameObject.transform.position = safePoint.position;
+        CC_Player.enabled = true;
         ChangeMaterialsTransparency(1f);
         B_CanSufferDmg = true;
         B_CanShoot = true;

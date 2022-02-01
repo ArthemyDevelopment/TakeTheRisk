@@ -679,10 +679,10 @@
                 {
                     "name": "",
                     "id": "0780b983-68a8-40aa-a3f8-dbc19c700619",
-                    "path": "*/{Cancel}",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "Cancel",
                     "isComposite": false,
                     "isPartOfComposite": false

@@ -6,9 +6,8 @@ using UnityEngine;
 public class PlayerRespawnManager : MonoBehaviour
 {
     public static PlayerRespawnManager current;
-    
     public GameObject G_LastSafePoint; //El ultimo safe point que se uso
-   public ZoneGameManager ZGM_ActZone; //Manager que controla cada zona en especifico
+    public ZoneGameManager ZGM_ActZone; //Manager que controla cada zona en especifico
     
 
     private void Awake()

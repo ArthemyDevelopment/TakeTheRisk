@@ -17,6 +17,7 @@ public class ShootingEnemy : MonoBehaviour
     {
         B_canShoot = true;
         B_isShooting = false;
+        T_Target = PlayerManager.current.transform;
     }
 
     private void Update()//Disparar cuando se cumplan las condiciones

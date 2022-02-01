@@ -24,3 +24,10 @@ public enum Weapons
 {
     starter
 }
+
+public enum DoorsId
+{
+    TutorialDoor,
+    BossTutorial
+    
+}

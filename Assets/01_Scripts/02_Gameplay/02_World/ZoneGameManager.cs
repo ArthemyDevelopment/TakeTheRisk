@@ -1,12 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ZoneGameManager : MonoBehaviour
 {
+    //ScenesToOpen
     [SerializeField]private List<EnemyController> EC_ZoneEnemies;
 
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player/Collider"))
+        {
+            PlayerRespawnManager.current.ZGM_ActZone = this;
+            LoadRelatedZones();
+            UnLoadUnrelatedZones();
+        }
+    }
 
 
     public void ResetEnemies()
@@ -15,5 +25,15 @@ public class ZoneGameManager : MonoBehaviour
         {
             EC.ResetEnemy();
         }
+    }
+
+    void LoadRelatedZones()
+    {
+        
+    }
+
+    void UnLoadUnrelatedZones()
+    {
+        
     }
 }
