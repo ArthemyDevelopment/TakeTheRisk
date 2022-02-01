@@ -21,12 +21,18 @@ public class CombineMeshRooms : MonoBehaviour
     }
 
 
+    
+    //Metodo para combinar dos mesh y crear un nuevo espacio de confine para la CinemachineCamera, toma como
+    //parametro el mesh que se va a incorporar (dado por lo general desde el script TriggerDoor) y lo combina
+    //al mesh de MainConfiner, que es el
     public void CombineMeshs(GameObject g)
     {
         Vector3 pos = MainConfiner.transform.position;
+        pos.y = 0;
         Destroy(MainConfiner.GetComponent<BoxCollider>());
         MeshFilter g1Mesh = MainConfiner.GetComponent<MeshFilter>();
         MeshFilter g2Mesh = g.GetComponent<MeshFilter>();
+        MeshCollider mainColl = MainConfiner.GetComponent<MeshCollider>();
         
         List<MeshFilter> meshs = new List<MeshFilter>();
         meshs.Add(g1Mesh);
@@ -44,8 +50,10 @@ public class CombineMeshRooms : MonoBehaviour
         g1Mesh.mesh = new Mesh();
         g1Mesh.mesh.CombineMeshes(combine, true, true);
         MainConfiner.transform.localScale = new Vector3(1, 1, 1);
-        CC.m_BoundingVolume = MainConfiner.AddComponent<BoxCollider>();
-        MainConfiner.AddComponent<BoxCollider>().isTrigger = true;
+        mainColl.sharedMesh = g1Mesh.mesh;
+        mainColl.convex = true;
+        mainColl.isTrigger = true;
+        CC.m_BoundingVolume = MainConfiner.GetComponent<MeshCollider>();
         MainConfiner.transform.position = pos;
         MainConfiner.gameObject.SetActive(true);
 
