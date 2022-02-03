@@ -5,7 +5,7 @@ public class EnemyBullet : MonoBehaviour
     public int I_Damage;
     private Vector3 V3_StartPos;
     private float F_Dist;
-    [SerializeField] private float F_MaxDist;
+    public float F_MaxDist;
     public float F_Vel;
 
 

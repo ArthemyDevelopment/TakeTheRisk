@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 4489395348272311577}
   - component: {fileID: 4489395348272311582}
   - component: {fileID: 4489395348272311583}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: MaxFollowRange
   m_TagString: Enemy/MaxRange
   m_Icon: {fileID: 0}
@@ -163,9 +163,9 @@ GameObject:
   - component: {fileID: 4489395348387372572}
   - component: {fileID: 4489395348387372579}
   - component: {fileID: 4489395348387372577}
-  - component: {fileID: 4489395348387372576}
   - component: {fileID: 8460901194204679260}
   - component: {fileID: 1336016260199409281}
+  - component: {fileID: 304215221370573552}
   m_Layer: 7
   m_Name: Cube
   m_TagString: Enemy/Hitbox
@@ -186,9 +186,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4489395349708825770}
-  - {fileID: 6105262242678004560}
   m_Father: {fileID: 4489395349635248520}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4489395348387372578
 MeshFilter:
@@ -291,22 +290,6 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 1
---- !u!114 &4489395348387372576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4489395348387372574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc7cce79f0d7b70408df4b2cdfdb9fd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ESM: {fileID: 4489395349635248521}
-  Nav_Enemy: {fileID: 4489395348387372577}
-  T_Origin: {fileID: 4489395349635248520}
-  B_FollowPlayer: 0
 --- !u!114 &8460901194204679260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,6 +308,7 @@ MonoBehaviour:
   I_Damage: 15
   F_BulletSpeed: 15
   F_FireRate: 0.3
+  I_MaxDistance: 0
 --- !u!114 &1336016260199409281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,6 +326,22 @@ MonoBehaviour:
   I_ActHealth: 100
   G_EnemyParent: {fileID: 4489395349635248523}
   I_PointsToGive: 15
+--- !u!114 &304215221370573552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4489395348387372574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca005884358f024469ea09abd186f642, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ESM: {fileID: 4489395349635248521}
+  Nav_Enemy: {fileID: 4489395348387372577}
+  T_Origin: {fileID: 4489395348542079817}
+  B_FollowPlayer: 0
 --- !u!1 &4489395348542079816
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,7 +354,7 @@ GameObject:
   - component: {fileID: 4489395348542079823}
   - component: {fileID: 4489395348542079822}
   - component: {fileID: 4489395348542079820}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Idle
   m_TagString: Enemy/MaxRange
   m_Icon: {fileID: 0}
@@ -450,6 +450,7 @@ Transform:
   - {fileID: 4489395348542079817}
   - {fileID: 4489395348272311576}
   - {fileID: 4489395349641483833}
+  - {fileID: 6105262242678004560}
   - {fileID: 4489395348387372575}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -472,8 +473,8 @@ MonoBehaviour:
   E_Shooting:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4489395348387372576}
-        m_TargetAssemblyTypeName: EnemyMovement, Project.Gameplay
+      - m_Target: {fileID: 304215221370573552}
+        m_TargetAssemblyTypeName: FollowPlayer, Project.Gameplay
         m_MethodName: OnShooting
         m_Mode: 1
         m_Arguments:
@@ -499,8 +500,8 @@ MonoBehaviour:
   E_Aggro:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4489395348387372576}
-        m_TargetAssemblyTypeName: EnemyMovement, Project.Gameplay
+      - m_Target: {fileID: 304215221370573552}
+        m_TargetAssemblyTypeName: FollowPlayer, Project.Gameplay
         m_MethodName: OnAggro
         m_Mode: 1
         m_Arguments:
@@ -526,8 +527,8 @@ MonoBehaviour:
   E_Follow:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4489395348387372576}
-        m_TargetAssemblyTypeName: EnemyMovement, Project.Gameplay
+      - m_Target: {fileID: 304215221370573552}
+        m_TargetAssemblyTypeName: FollowPlayer, Project.Gameplay
         m_MethodName: OnFollow
         m_Mode: 1
         m_Arguments:
@@ -541,8 +542,8 @@ MonoBehaviour:
   E_Back:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4489395348387372576}
-        m_TargetAssemblyTypeName: EnemyMovement, Project.Gameplay
+      - m_Target: {fileID: 304215221370573552}
+        m_TargetAssemblyTypeName: FollowPlayer, Project.Gameplay
         m_MethodName: OnBack
         m_Mode: 1
         m_Arguments:
@@ -579,7 +580,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   G_Enemy: {fileID: 4489395348387372574}
   ESM: {fileID: 4489395349635248521}
-  EM: {fileID: 4489395348387372576}
+  EM: {fileID: 304215221370573552}
 --- !u!1 &4489395349641483832
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,7 +593,7 @@ GameObject:
   - component: {fileID: 4489395349641483838}
   - component: {fileID: 4489395349641483839}
   - component: {fileID: 4489395349641483836}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Agro
   m_TagString: Enemy/Agro
   m_Icon: {fileID: 0}
@@ -667,7 +668,7 @@ GameObject:
   - component: {fileID: 4489395349708825771}
   - component: {fileID: 4489395349708825768}
   - component: {fileID: 4489395349708825769}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Shooting
   m_TagString: Enemy/Shooting
   m_Icon: {fileID: 0}
@@ -1001,12 +1002,12 @@ RectTransform:
   m_GameObject: {fileID: 7417161092464151591}
   m_LocalRotation: {x: 0.70710653, y: -0, z: -0, w: 0.7071071}
   m_LocalPosition: {x: 0, y: 0, z: 0.661}
-  m_LocalScale: {x: 0.00542, y: 0.0054199994, z: 0.0054199994}
+  m_LocalScale: {x: 0.00542, y: 0.005419999, z: 0.005419999}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 577122633862637626}
-  m_Father: {fileID: 4489395348387372575}
-  m_RootOrder: 1
+  m_Father: {fileID: 4489395349635248520}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

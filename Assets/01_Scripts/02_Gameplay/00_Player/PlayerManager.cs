@@ -59,6 +59,14 @@ public class PlayerManager : MonoBehaviour
     [FoldoutGroup("Shooting"), PropertySpace(SpaceAfter = 15)][SerializeField] private float F_ShootAngle;
     #endregion
     
+    #region ----------------------Weapon----------------------------
+
+    [FoldoutGroup("Weapon")] public List<Weapons> Wp_ObtainedWeapons;
+    [FoldoutGroup("Weapon")] public List<Weapon> Wp_ObtainedWeaponsSO;    
+    [FoldoutGroup("Weapon")] [SerializeField] private Weapon Wp_WeaponSO;
+    [FoldoutGroup("Weapon")] [SerializeField] private Weapons Wp_ActWeapon;
+    
+    #endregion
     #region ----------------------GUI----------------------------
     [FoldoutGroup("GUI")][SerializeField] private Slider Sl_LifeBar;
     [FoldoutGroup("GUI")][SerializeField] private RectTransform Rt_LifeBar;
@@ -142,6 +150,8 @@ public class PlayerManager : MonoBehaviour
     public int SetDamage() //Configura dano del player considerando un porcentaje de vida faltante
     {
         float temp = I_BaseDamage + ((I_MaxHealth-I_ActHealth)* F_DamageScale);
+        if (Wp_ActWeapon != Weapons.none)
+            temp += Wp_WeaponSO.I_WeaponDamage;
         return (int)temp;
         
     }

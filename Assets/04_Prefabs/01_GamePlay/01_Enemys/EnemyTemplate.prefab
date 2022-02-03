@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 5415193199185553653}
   - component: {fileID: 5415193199185553654}
   - component: {fileID: 5415193199185553655}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Shooting
   m_TagString: Enemy/Shooting
   m_Icon: {fileID: 0}
@@ -376,7 +376,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c756101efd7c246b8e8cc5467cf5bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GizmoSize: 24
+  Type_Colliders: 0
+  col: {fileID: 5415193199185553653}
   GizmoColor: {r: 0.66251826, g: 0, b: 0.9339623, a: 0.49803922}
 --- !u!114 &5415193199185553655
 MonoBehaviour:
@@ -401,6 +402,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5415193199653371350}
   - component: {fileID: 5415193199653371351}
+  - component: {fileID: 2784398988075939636}
   m_Layer: 7
   m_Name: EnemyTemplate
   m_TagString: Untagged
@@ -423,6 +425,7 @@ Transform:
   - {fileID: 5415193200704605975}
   - {fileID: 5415193200974389574}
   - {fileID: 5415193199655541351}
+  - {fileID: 1799796697948948218}
   - {fileID: 5415193200548909633}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -445,7 +448,7 @@ MonoBehaviour:
   E_Shooting:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5415193200548909694}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: EnemyMovement, Project.Gameplay
         m_MethodName: OnShooting
         m_Mode: 1
@@ -460,7 +463,7 @@ MonoBehaviour:
   E_Aggro:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5415193200548909694}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: EnemyMovement, Project.Gameplay
         m_MethodName: OnAggro
         m_Mode: 1
@@ -475,7 +478,7 @@ MonoBehaviour:
   E_Follow:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5415193200548909694}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: EnemyMovement, Project.Gameplay
         m_MethodName: OnFollow
         m_Mode: 1
@@ -490,7 +493,7 @@ MonoBehaviour:
   E_Back:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5415193200548909694}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: EnemyMovement, Project.Gameplay
         m_MethodName: OnBack
         m_Mode: 1
@@ -502,6 +505,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2784398988075939636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5415193199653371349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: becad3e6abfaf96408799610e361e3d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  G_Enemy: {fileID: 5415193200548909632}
+  ESM: {fileID: 5415193199653371351}
+  EM: {fileID: 0}
 --- !u!1 &5415193199655541350
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,7 +532,7 @@ GameObject:
   - component: {fileID: 5415193199655541344}
   - component: {fileID: 5415193199655541345}
   - component: {fileID: 5415193199655541346}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Agro
   m_TagString: Enemy/Agro
   m_Icon: {fileID: 0}
@@ -561,7 +579,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c756101efd7c246b8e8cc5467cf5bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GizmoSize: 40
+  Type_Colliders: 0
+  col: {fileID: 5415193199655541344}
   GizmoColor: {r: 0, g: 0.45591453, b: 0.93333334, a: 0.49803922}
 --- !u!114 &5415193199655541346
 MonoBehaviour:
@@ -590,7 +609,6 @@ GameObject:
   - component: {fileID: 5415193200548909634}
   - component: {fileID: 5415193200548909693}
   - component: {fileID: 5415193200548909695}
-  - component: {fileID: 5415193200548909694}
   - component: {fileID: 3316616540152908138}
   m_Layer: 7
   m_Name: Cube
@@ -612,9 +630,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5415193199185553652}
-  - {fileID: 1799796697948948218}
   m_Father: {fileID: 5415193199653371350}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5415193200548909692
 MeshFilter:
@@ -717,22 +734,6 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 1
---- !u!114 &5415193200548909694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5415193200548909632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc7cce79f0d7b70408df4b2cdfdb9fd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ESM: {fileID: 5415193199653371351}
-  Nav_Enemy: {fileID: 5415193200548909695}
-  T_Origin: {fileID: 5415193199653371350}
-  B_FollowPlayer: 0
 --- !u!114 &3316616540152908138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -749,6 +750,7 @@ MonoBehaviour:
   I_MaxHealth: 100
   I_ActHealth: 100
   G_EnemyParent: {fileID: 5415193199653371349}
+  I_PointsToGive: 0
 --- !u!1 &5415193200704605974
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,7 +763,7 @@ GameObject:
   - component: {fileID: 5415193200704605969}
   - component: {fileID: 5415193200704605968}
   - component: {fileID: 5415193200704605970}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Idle
   m_TagString: Enemy/MaxRange
   m_Icon: {fileID: 0}
@@ -808,7 +810,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c756101efd7c246b8e8cc5467cf5bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GizmoSize: 3
+  Type_Colliders: 0
+  col: {fileID: 5415193200704605969}
   GizmoColor: {r: 0.8117647, g: 0.027450958, b: 0.027450958, a: 0.49803922}
 --- !u!114 &5415193200704605970
 MonoBehaviour:
@@ -835,7 +838,7 @@ GameObject:
   - component: {fileID: 5415193200974389575}
   - component: {fileID: 5415193200974389568}
   - component: {fileID: 5415193200974389569}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: MaxFollowRange
   m_TagString: Enemy/MaxRange
   m_Icon: {fileID: 0}
@@ -882,7 +885,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c756101efd7c246b8e8cc5467cf5bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GizmoSize: 60
+  Type_Colliders: 0
+  col: {fileID: 5415193200974389575}
   GizmoColor: {r: 0.026788909, g: 0.8113208, b: 0.34709826, a: 0.49803922}
 --- !u!114 &5415193200974389569
 MonoBehaviour:
@@ -925,16 +929,16 @@ RectTransform:
   m_GameObject: {fileID: 6612259726496296215}
   m_LocalRotation: {x: 0.70710653, y: -0, z: -0, w: 0.7071071}
   m_LocalPosition: {x: 0, y: 0, z: 0.662}
-  m_LocalScale: {x: 0.0054248003, y: 0.0054248003, z: 0.0054248003}
+  m_LocalScale: {x: 0.0054248003, y: 0.0054248, z: 0.0054248}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7384412413234036956}
-  m_Father: {fileID: 5415193200548909633}
-  m_RootOrder: 1
+  m_Father: {fileID: 5415193199653371350}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.527}
+  m_AnchoredPosition: {x: 0, y: 1.619}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6994546624768823416

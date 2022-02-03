@@ -22,6 +22,7 @@ public enum SaveDataKeys
 
 public enum Weapons
 {
+    none,
     starter
 }
 

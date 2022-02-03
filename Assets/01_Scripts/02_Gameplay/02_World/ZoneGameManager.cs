@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ZoneGameManager : MonoBehaviour
 {
-    //ScenesToOpen
+    //TODO: ScenesToOpen
     [SerializeField]private List<EnemyController> EC_ZoneEnemies;
 
     private void OnTriggerEnter(Collider other)
@@ -27,12 +27,12 @@ public class ZoneGameManager : MonoBehaviour
         }
     }
 
-    void LoadRelatedZones()
+    void LoadRelatedZones() //Load scenes aditive from the conected zones 
     {
         
     }
 
-    void UnLoadUnrelatedZones()
+    void UnLoadUnrelatedZones() //Unload scenes that are not conected zones
     {
         
     }

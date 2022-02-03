@@ -15,7 +15,7 @@ public class EnemyController : MonoBehaviour
         ESM.enemyState = EnemyStateMachine.EnemyState.Idle;
         ESM.B_CanAggro = true;
         ESM.B_CanShoot = false;
-        EM.B_FollowPlayer = false;
+        EM.ResetEnemy();
         gameObject.SetActive(true);
     }
 

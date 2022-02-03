@@ -11,6 +11,7 @@ public class ShootingEnemy : MonoBehaviour
     [SerializeField]private int I_Damage;
     [SerializeField]private float F_BulletSpeed;
     [SerializeField]private float F_FireRate;
+    [SerializeField]private float I_MaxDistance;
 
 
     private void OnEnable()
@@ -38,10 +39,13 @@ public class ShootingEnemy : MonoBehaviour
     void Shoot() //Disparar una bala y modificar los valores
     {
         GameObject temp = BulletPool.current.GetBullet();
-        temp.GetComponent<EnemyBullet>().I_Damage = I_Damage;
-        temp.GetComponent<EnemyBullet>().F_Vel = F_BulletSpeed;
-        float angle = Mathf.Atan2(T_Target.position.z - transform.position.z, T_Target.position.x - transform.position.x) * Mathf.Rad2Deg;
-        temp.transform.rotation = Quaternion.Euler(0, -angle, 0);
+        EnemyBullet EB = temp.GetComponent<EnemyBullet>();
+        EB.I_Damage = I_Damage;
+        EB.F_Vel = F_BulletSpeed;
+        if(I_MaxDistance !=0)
+            EB.F_MaxDist = I_MaxDistance;
+        //float angle = Mathf.Atan2(T_Target.position.z - transform.position.z, T_Target.position.x - transform.position.x) * Mathf.Rad2Deg;
+        temp.transform.rotation = transform.rotation;
         temp.transform.position = transform.position;
         temp.SetActive(true);
     }

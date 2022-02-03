@@ -12,7 +12,7 @@ public class BossCamera : MonoBehaviour
     private void Awake()
     {
         Vcam_Boss.gameObject.SetActive(false);
-        //Add DeactivateCamera to BossDeath
+        //TODO:Add DeactivateCamera to BossDeath
     }
 
     private void OnTriggerEnter(Collider other)
