@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +7,7 @@ using TMPro;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-[DefaultExecutionOrder(0)]
+[DefaultExecutionOrder(-1)]
 public class PlayerManager : MonoBehaviour
 {
     #region Vars
@@ -50,7 +49,7 @@ public class PlayerManager : MonoBehaviour
     #region ----------------------Shooting----------------------------
     [FoldoutGroup("Shooting"), Title("Bullet", titleAlignment: TitleAlignments.Centered)] public GameObject G_BulletPrefab;
     [FoldoutGroup("Shooting")] public int I_BulletPoolSize;
-    [FoldoutGroup("Shooting")] public Queue<GameObject> Q_BulletPool = new Queue<GameObject>();
+    [FoldoutGroup("Shooting")] private Queue<GameObject> Q_BulletPool = new Queue<GameObject>();
     [FoldoutGroup("Shooting"),Title("Shooting", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Shooting")] public Transform T_ShootingPoint;
     [FoldoutGroup("Shooting")] public float F_ShootDelay;
@@ -61,10 +60,10 @@ public class PlayerManager : MonoBehaviour
     
     #region ----------------------Weapon----------------------------
 
-    [FoldoutGroup("Weapon")] public List<Weapons> Wp_ObtainedWeapons;
-    [FoldoutGroup("Weapon")] public List<Weapon> Wp_ObtainedWeaponsSO;    
+    [FoldoutGroup("Weapon")] public Weapons[] Wp_ObtainedWeapons = new Weapons[12];
+    [FoldoutGroup("Weapon")] public Weapon[] Wp_ObtainedWeaponsSO = new Weapon[12];    
     [FoldoutGroup("Weapon")] [SerializeField] private Weapon Wp_WeaponSO;
-    [FoldoutGroup("Weapon")] [SerializeField] private Weapons Wp_ActWeapon;
+    [FoldoutGroup("Weapon")] public Weapons Wp_ActWeapon;
     
     #endregion
     #region ----------------------GUI----------------------------
@@ -78,13 +77,13 @@ public class PlayerManager : MonoBehaviour
     [FoldoutGroup("Other References")] public Transform T_PlayerModel;
     [FoldoutGroup("Other References")] public CharacterController CC_Player;
     
+    #endregion
     
     #region ---------------------Events---------------------
 
     [FoldoutGroup("Events")] public UnityEvent Ev_OnPlayerDeath;
     #endregion
     
-    #endregion
     
     #endregion
 
@@ -109,6 +108,15 @@ public class PlayerManager : MonoBehaviour
         UpdateHud();
     }
 
+    private void OnDisable()
+    {
+        InputController.current.InputManager.Player.Shooting.performed -= ShootAngle;
+        InputController.current.InputManager.Player.Healing.performed -= Heal;
+        InputController.current.InputManager.Player.Parry.performed -= Parry;
+        InputController.current.InputManager.Player.SelfDamage.performed -= SelfDmg;
+    }
+
+
     private void Update() //Comprobar si se puede disparar y hacerlo cuando corresponda
     {
         if (B_CanShoot && B_IsShooting)
@@ -126,6 +134,12 @@ public class PlayerManager : MonoBehaviour
 
     #region BasicsMethods
 
+    public void ChangeWeapon(int id)
+    {
+        Wp_ActWeapon = Wp_ObtainedWeapons[id];
+        Wp_WeaponSO = Wp_ObtainedWeaponsSO[id];
+    }
+    
     void HealthCheck(int i) //en cada cambio del valor de vida, comprueba que no supere la vida maxima y si la vida baja a/o 0, la setea en cero y llama al metodo de muerte
     {
         _actHealth = i;
@@ -151,7 +165,7 @@ public class PlayerManager : MonoBehaviour
     {
         float temp = I_BaseDamage + ((I_MaxHealth-I_ActHealth)* F_DamageScale);
         if (Wp_ActWeapon != Weapons.none)
-            temp += Wp_WeaponSO.I_WeaponDamage;
+            temp += Wp_WeaponSO.I_Damage;
         return (int)temp;
         
     }

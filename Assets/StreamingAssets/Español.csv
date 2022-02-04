@@ -50,5 +50,8 @@ Stat_CDParry;Enfriamiento desvío
 Stat_CDParryDesc;Segundos que el desvio permanece en enfriamiento
 Stat_Parry;Duración desvío
 Stat_ParryDesc;Segundos que dura el beneficio de un desvio exitoso
+Weap_Damage;Daño
+Weap_Speed;Velocidad
+Weap_Size;Tamaño bala
 Death_Text;Has sido destruido
 Death_Tip1;Si los enemigos tienen mucha vida, intenta aumentar tu daño reduciendo tu vida para acabar con ellos más rapido

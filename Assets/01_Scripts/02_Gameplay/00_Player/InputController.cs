@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
 
-
+[DefaultExecutionOrder(-1)]
 public class InputController : MonoBehaviour
 {
 
@@ -37,6 +37,13 @@ public class InputController : MonoBehaviour
 
         Application.targetFrameRate = 60;
         InputManager = new GameInputManager();
+        
+        
+
+    }
+
+    private void OnEnable()
+    {
         //Asignar referencias por si acaso y activar el movimiento del player
         Rb_PlayerRigidBody = GetComponent<Rigidbody>();
         T_PlayerTransform = GetComponent<Transform>();
@@ -54,11 +61,18 @@ public class InputController : MonoBehaviour
 
         //Setear el cambio de rotación con el input, started y canceled no aplican por el tipo de input
         InputManager.Player.Shooting.performed += Rotate;
-        
-
     }
 
-   
+    private void OnDisable()
+    {
+        InputManager.Player.Movement.started -= Move;
+        InputManager.Player.Movement.performed -= Move;
+        InputManager.Player.Movement.canceled -= Move;
+        InputManager.Player.Movement.started -= CameraStartMove;
+        InputManager.Player.Movement.canceled -= CameraStopMove;
+        InputManager.Player.Shooting.performed -= Rotate;
+    }
+
 
     void Move(InputAction.CallbackContext call) //Modificar y editar placeholder de movimiento
     {
@@ -99,9 +113,5 @@ public class InputController : MonoBehaviour
         if (B_CanMove)
             CC_Player.SimpleMove(V3_Movement * F_Velocity);
     }
-
-    private void FixedUpdate() //Actualizar movimiento
-    {
-        //Rb_PlayerRigidBody.MovePosition(Rb_PlayerRigidBody.position + (V3_Movement * F_Velocity * Time.fixedDeltaTime));
-    }
+    
 }

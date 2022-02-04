@@ -6,7 +6,7 @@ public class BulletPool : MonoBehaviour
     public static BulletPool current;
 
     public GameObject G_BulletPrefab;
-    public Queue<GameObject> Q_EnemyBullets = new Queue<GameObject>();
+    private Queue<GameObject> Q_EnemyBullets = new Queue<GameObject>();
 
 
     private void Awake()

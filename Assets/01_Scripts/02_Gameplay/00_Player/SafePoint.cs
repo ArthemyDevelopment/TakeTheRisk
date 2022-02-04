@@ -17,10 +17,16 @@ public class SafePoint : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        InputController.current.InputManager.UI.Cancel.performed += LeaveSafePoint;
-        InputController.current.InputManager.UI.SafepointMenu.performed += LeaveSafePoint;
+        InputController.current.InputManager.UI.Cancel.started += LeaveSafePoint;
+        InputController.current.InputManager.UI.SafepointMenu.started += LeaveSafePoint;
+    }
+
+    void OnDisable()
+    {
+        InputController.current.InputManager.UI.Cancel.started -= LeaveSafePoint;
+        InputController.current.InputManager.UI.SafepointMenu.started -= LeaveSafePoint;
     }
 
 
@@ -40,7 +46,6 @@ public class SafePoint : MonoBehaviour
         InputController.current.B_CanMove = true;
         PlayerManager.current.B_CanShoot = true;
         UpgradesSystem.current.B_CanUpgrade = false;
-        StartCoroutine(OpenUpgradeMenu(0));
     }
 
 

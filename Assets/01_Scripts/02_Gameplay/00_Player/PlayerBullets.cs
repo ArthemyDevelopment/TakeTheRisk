@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerBullets : MonoBehaviour
@@ -22,5 +23,11 @@ public class PlayerBullets : MonoBehaviour
             PlayerManager.current.StoreBullet(this.gameObject);
     }
 
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("World/Wall"))
+        {
+            PlayerManager.current.StoreBullet(this.gameObject);
+        }
+    }
 }

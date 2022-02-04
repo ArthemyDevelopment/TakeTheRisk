@@ -11,6 +11,7 @@ TagManager:
   - Enemy/Shooting
   - Enemy/Bullet
   - Player/Bullet
+  - World/Wall
   layers:
   - Default
   - TransparentFX

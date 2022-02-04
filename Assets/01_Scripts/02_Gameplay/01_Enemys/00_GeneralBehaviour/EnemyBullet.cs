@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
@@ -21,5 +22,14 @@ public class EnemyBullet : MonoBehaviour
         F_Dist = Vector3.Distance(transform.position, V3_StartPos);
         if (F_Dist > F_MaxDist)
             BulletPool.current.StoreBullet(this.gameObject);
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("World/Wall"))
+        {
+            BulletPool.current.StoreBullet(this.gameObject);
+        }
     }
 }

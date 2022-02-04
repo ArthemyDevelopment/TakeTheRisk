@@ -9,6 +9,7 @@ public class WeaponObtention : MonoBehaviour
     [SerializeField] private Weapon Wp_WeaponToObtain;
     [SerializeField] private bool B_isObtained;
     [SerializeField] private int id;
+    [SerializeField] private WeaponInventory WI;
     
 #if UNITY_EDITOR
     [SerializeField] private bool B_isDebugging;
@@ -23,6 +24,7 @@ public class WeaponObtention : MonoBehaviour
 #endif
     private void OnEnable()
     {
+        WI = WeaponInventory.current;
         if (PlayerPrefs.HasKey("Weapon" + id))
         {
             B_isObtained = true;
@@ -37,8 +39,12 @@ public class WeaponObtention : MonoBehaviour
             {
                 B_isObtained = true;
                 PlayerPrefs.SetInt("Weapon" + id, 1);
-                PlayerManager.current.Wp_ObtainedWeaponsSO.Add(Wp_WeaponToObtain);
-                PlayerManager.current.Wp_ObtainedWeapons.Add(Wp_weapon);
+                PlayerManager.current.Wp_ObtainedWeaponsSO[id] = Wp_WeaponToObtain;
+                PlayerManager.current.Wp_ObtainedWeapons[id] = Wp_weapon;
+                if(PlayerManager.current.Wp_ActWeapon == Weapons.none)
+                    WI.ChangeWeapon(id);
+                else
+                    WI.UpdateButtons();
             }
         }
     }

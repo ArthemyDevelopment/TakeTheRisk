@@ -50,12 +50,20 @@ public class UpgradesSystem : MonoBehaviour
             Destroy(this);
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        InputController.current.InputManager.Player.UpgradeMenu.performed += OpenUpgradeMenu;
-        InputController.current.InputManager.UI.SafepointMenu.performed += OpenUpgradeMenu;
-        InputController.current.InputManager.UI.Cancel.performed += OpenUpgradeMenu;
+        Debug.Log(InputController.current);
+        InputController.current.InputManager.Player.UpgradeMenu.started += OpenUpgradeMenu;
+        InputController.current.InputManager.UI.SafepointMenu.started += OpenUpgradeMenu;
+        InputController.current.InputManager.UI.Cancel.started += OpenUpgradeMenu;
         UpdateText();
+    }
+
+    void OnDisable()
+    {
+        InputController.current.InputManager.Player.UpgradeMenu.started -= OpenUpgradeMenu;
+        InputController.current.InputManager.UI.SafepointMenu.started -= OpenUpgradeMenu;
+        InputController.current.InputManager.UI.Cancel.started -= OpenUpgradeMenu;
     }
 
     private void OpenUpgradeMenu(InputAction.CallbackContext obj)//Middle point entre la deteccion de input y el methodo de abrir el menu
@@ -66,6 +74,8 @@ public class UpgradesSystem : MonoBehaviour
 
     public void OpenUpgradeMenu() //Abrir y cerra el menu de mejora
     {
+        Debug.Log("Upgrade Menu Open");
+        
         switch (B_isOpen)
         {
             case false:
