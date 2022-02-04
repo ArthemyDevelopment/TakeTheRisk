@@ -60,6 +60,8 @@ public class PlayerManager : MonoBehaviour
     
     #region ----------------------Weapon----------------------------
 
+    [FoldoutGroup("Weapon")] [SerializeField]private GameObject G_WeaponsParent;
+    [FoldoutGroup("Weapon")] private GameObject G_ActWeaponModel;
     [FoldoutGroup("Weapon")] public Weapons[] Wp_ObtainedWeapons = new Weapons[12];
     [FoldoutGroup("Weapon")] public Weapon[] Wp_ObtainedWeaponsSO = new Weapon[12];    
     [FoldoutGroup("Weapon")] [SerializeField] private Weapon Wp_WeaponSO;
@@ -73,7 +75,7 @@ public class PlayerManager : MonoBehaviour
     #endregion
     
     #region -------------------Other References-----------------
-    [FoldoutGroup("Other References")] [SerializeField] private Renderer MR_PlayerMeshRenderer;
+    [FoldoutGroup("Other References")] [SerializeField] private List<Renderer> MR_PlayerMeshRenderer;
     [FoldoutGroup("Other References")] public Transform T_PlayerModel;
     [FoldoutGroup("Other References")] public CharacterController CC_Player;
     
@@ -138,6 +140,9 @@ public class PlayerManager : MonoBehaviour
     {
         Wp_ActWeapon = Wp_ObtainedWeapons[id];
         Wp_WeaponSO = Wp_ObtainedWeaponsSO[id];
+        if(G_ActWeaponModel!=null)
+            Destroy(G_ActWeaponModel);
+        G_ActWeaponModel = Instantiate(Wp_WeaponSO.G_WeaponModel, G_WeaponsParent.transform);
     }
     
     void HealthCheck(int i) //en cada cambio del valor de vida, comprueba que no supere la vida maxima y si la vida baja a/o 0, la setea en cero y llama al metodo de muerte
@@ -172,9 +177,12 @@ public class PlayerManager : MonoBehaviour
 
     void ChangeMaterialsTransparency(float f) //Modifica la transparencia de la nave para el fin que sea necesario
     {
-        foreach (Material m in MR_PlayerMeshRenderer.materials)
+        foreach (Renderer ren in MR_PlayerMeshRenderer)
         {
-            m.color = new Color(m.color.r, m.color.g, m.color.b, f);
+            foreach (Material m in ren.materials)
+            {
+                m.color = new Color(m.color.r, m.color.g, m.color.b, f);
+            }
         }
     }
     

@@ -22,6 +22,8 @@ public class FollowPlayer : EnemyMovement
     public void OnShooting()
     {
         B_FollowPlayer = true;
+        T_LookTarget = PlayerManager.current.transform;
+        Nav_Enemy.stoppingDistance = 3f;
     }
 
     public void OnAggro()

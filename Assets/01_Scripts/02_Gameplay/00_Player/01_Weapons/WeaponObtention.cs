@@ -31,21 +31,20 @@ public class WeaponObtention : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void GiveWeapon()
     {
-        if (other.CompareTag("Player/Collider"))
+        if (!B_isObtained)
         {
-            if (!B_isObtained)
-            {
-                B_isObtained = true;
-                PlayerPrefs.SetInt("Weapon" + id, 1);
-                PlayerManager.current.Wp_ObtainedWeaponsSO[id] = Wp_WeaponToObtain;
-                PlayerManager.current.Wp_ObtainedWeapons[id] = Wp_weapon;
-                if(PlayerManager.current.Wp_ActWeapon == Weapons.none)
-                    WI.ChangeWeapon(id);
-                else
-                    WI.UpdateButtons();
-            }
+            B_isObtained = true;
+            PlayerPrefs.SetInt("Weapon" + id, 1);
+            PlayerManager.current.Wp_ObtainedWeaponsSO[id] = Wp_WeaponToObtain;
+            PlayerManager.current.Wp_ObtainedWeapons[id] = Wp_weapon;
+            if(PlayerManager.current.Wp_ActWeapon == Weapons.none)
+                WI.ChangeWeapon(id);
+            else
+                WI.UpdateButtons();
         }
     }
+
+   
 }

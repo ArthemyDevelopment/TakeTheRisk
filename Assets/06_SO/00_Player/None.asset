@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 591f4979e74e7a243a915dbbdfe47c99, type: 3}
   m_Name: None
   m_EditorClassIdentifier: 
-  I_WeaponDamage: 0
-  Ms_WeaponModel: {fileID: 0}
+  I_Damage: 0
+  F_Velocity: 0
+  F_Size: 0
+  G_WeaponModel: {fileID: 0}
   Sp_WeaponImage: {fileID: 0}

@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8369507033830343749}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.46, y: 0.49, z: -0.27}
-  m_LocalScale: {x: 1.8305, y: 1, z: 10.7824}
+  m_LocalPosition: {x: 4.67, y: 0.49, z: 0}
+  m_LocalScale: {x: 1.8305, y: 1, z: 7.425084}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8369507034472519134}
@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 8369507034763480546}
   - component: {fileID: 8369507034763480547}
   - component: {fileID: 795881366309783488}
+  - component: {fileID: 8596476598055546305}
   m_Layer: 7
   m_Name: Door
   m_TagString: World/Wall
@@ -125,7 +126,7 @@ Transform:
   m_GameObject: {fileID: 8369507034763480549}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2.11, z: 0}
-  m_LocalScale: {x: 1, y: 4.4237, z: 12.614378}
+  m_LocalScale: {x: 1, y: 4.4237, z: 7.4148574}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8369507034472519134}
@@ -230,3 +231,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
+--- !u!208 &8596476598055546305
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8369507034763480549}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

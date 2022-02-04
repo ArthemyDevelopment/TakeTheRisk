@@ -15,5 +15,5 @@ MonoBehaviour:
   I_Damage: 20
   F_Velocity: 0.2
   F_Size: 1
-  Ms_WeaponModel: {fileID: 0}
-  Sp_WeaponImage: {fileID: 0}
+  G_WeaponModel: {fileID: 6396125228546350715, guid: e56741ffcdeb22e45b135a7fd00de9f3, type: 3}
+  Sp_WeaponImage: {fileID: 21300000, guid: 6794cd5f60b9e9d4c96d80eacaa107cd, type: 3}

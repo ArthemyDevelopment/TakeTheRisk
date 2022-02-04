@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class SafePoint : MonoBehaviour
@@ -9,6 +10,7 @@ public class SafePoint : MonoBehaviour
     [SerializeField] private Transform T_CenterPoint;
     [SerializeField] private float F_ConectSpeed;
     [SerializeField] private bool B_InSafeSpace = false;
+    [SerializeField] private UnityEvent Ev_OnEnterSafePoint;
     private void OnTriggerEnter(Collider other) 
     {
         if (other.CompareTag("Player/Collider"))
@@ -64,5 +66,6 @@ public class SafePoint : MonoBehaviour
     {
         yield return new WaitForSeconds(t);
         UpgradesSystem.current.OpenUpgradeMenu();
+        Ev_OnEnterSafePoint.Invoke();
     }
 }

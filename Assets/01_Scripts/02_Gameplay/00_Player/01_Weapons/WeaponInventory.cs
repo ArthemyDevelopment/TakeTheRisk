@@ -78,6 +78,8 @@ public class WeaponInventory : MonoBehaviour
         DeactiveButton(id);
         PlayerManager.current.ChangeWeapon(id);
         Weapon refwe = PlayerManager.current.Wp_ObtainedWeaponsSO[id];
+        Im_ActualWeapon.sprite = refwe.Sp_WeaponImage;
+        Im_ActualWeapon.preserveAspect = true;
         Tx_Damage.text = refwe.I_Damage.ToString();
         Tx_Speed.text = refwe.F_Velocity.ToString("F2",CultureInfo.InvariantCulture);
         Tx_Size.text = refwe.F_Size.ToString("F2", CultureInfo.InvariantCulture);
