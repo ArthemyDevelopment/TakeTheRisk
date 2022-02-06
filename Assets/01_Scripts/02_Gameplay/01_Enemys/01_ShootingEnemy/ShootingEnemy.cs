@@ -41,7 +41,8 @@ public class ShootingEnemy : MonoBehaviour
         GameObject temp = BulletPool.current.GetBullet();
         EnemyBullet EB = temp.GetComponent<EnemyBullet>();
         EB.I_Damage = I_Damage;
-        EB.F_Vel = F_BulletSpeed;
+        if(F_BulletSpeed != 0)
+            EB.F_Vel = F_BulletSpeed;
         if(I_MaxDistance !=0)
             EB.F_MaxDist = I_MaxDistance;
         //float angle = Mathf.Atan2(T_Target.position.z - transform.position.z, T_Target.position.x - transform.position.x) * Mathf.Rad2Deg;

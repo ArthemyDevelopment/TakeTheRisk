@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 1772798671555233739}
   - component: {fileID: 8600185448475386934}
   - component: {fileID: 5440171689864127023}
-  m_Layer: 0
-  m_Name: EnemyBullet
+  m_Layer: 7
+  m_Name: 01_MediumBullet
   m_TagString: Enemy/Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3969703970510426683}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 07e91fd1340cc9e49897fca60ede0fad, type: 2}
+  - {fileID: 2100000, guid: 573b0b668fb15254587209ad21c57aae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,5 +111,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   I_Damage: 0
-  F_MaxDist: 25
-  F_Vel: 0
+  F_MaxDist: 30
+  F_Vel: 20

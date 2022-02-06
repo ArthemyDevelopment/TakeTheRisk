@@ -52,7 +52,6 @@ public class UpgradesSystem : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log(InputController.current);
         InputController.current.InputManager.Player.UpgradeMenu.started += OpenUpgradeMenu;
         InputController.current.InputManager.UI.SafepointMenu.started += OpenUpgradeMenu;
         InputController.current.InputManager.UI.Cancel.started += OpenUpgradeMenu;
@@ -74,7 +73,6 @@ public class UpgradesSystem : MonoBehaviour
 
     public void OpenUpgradeMenu() //Abrir y cerra el menu de mejora
     {
-        Debug.Log("Upgrade Menu Open");
         
         switch (B_isOpen)
         {

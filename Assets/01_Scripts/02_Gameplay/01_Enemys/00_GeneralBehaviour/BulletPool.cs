@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,6 +6,7 @@ public class BulletPool : MonoBehaviour
 {
     public static BulletPool current;
 
+    [SerializeField] private int I_StartingPoolSize;
     public GameObject G_BulletPrefab;
     private Queue<GameObject> Q_EnemyBullets = new Queue<GameObject>();
 
@@ -17,6 +19,19 @@ public class BulletPool : MonoBehaviour
             Destroy(this);
     }
 
+    private void Start()
+    {
+        InitiatePool();
+    }
+
+
+    void InitiatePool()
+    {
+        for (int i = 0; i < I_StartingPoolSize; i++)
+        {
+            StoreBullet(Instantiate(G_BulletPrefab));
+        }
+    }
 
     public GameObject GetBullet() //Solicitar una bala a la pool
     {

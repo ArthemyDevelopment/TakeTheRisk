@@ -11,7 +11,7 @@ public class InputController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera VCam; //Ref a la camara de cinemachines
     [SerializeField] private int I_VcamDefaul; //delay de seguimiento de la camara estando quieto
     [SerializeField] private int I_VcamMove; //delay de seguimiento de la camara moviendose
-    [SerializeField] private float F_Velocity; //Velocidad de player
+    public float F_Velocity; //Velocidad de player
     [SerializeField] private float F_RotationSmoothing;
     public bool B_CanMove = true;//Smoothing de rotacion del player 
     
@@ -45,7 +45,6 @@ public class InputController : MonoBehaviour
     private void OnEnable()
     {
         //Asignar referencias por si acaso y activar el movimiento del player
-        Rb_PlayerRigidBody = GetComponent<Rigidbody>();
         T_PlayerTransform = GetComponent<Transform>();
         InputManager.Player.Enable();
 

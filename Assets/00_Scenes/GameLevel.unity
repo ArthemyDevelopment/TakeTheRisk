@@ -266,6 +266,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da23c4dc2105a784e8b728be9d8565cf, type: 3}
+--- !u!114 &874942918 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3043996429794237236, guid: 0a871c20cc9710942bd9649f3d7cc555, type: 3}
+  m_PrefabInstance: {fileID: 3043996431084198949}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7460387a4f1b64f40930589c31742b90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &874942922 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 3043996429794237232, guid: 0a871c20cc9710942bd9649f3d7cc555, type: 3}
+  m_PrefabInstance: {fileID: 3043996431084198949}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1111219673
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,6 +341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8b14af8f42b6cd4dacf5b68e460beee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  I_StartingPoolSize: 15
   G_BulletPrefab: {fileID: 3969703970510426683, guid: 8f42b9a319e2e8847aebdd9d3e095afe, type: 3}
 --- !u!4 &1111219678
 Transform:
@@ -341,6 +358,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1420280372 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3043996431038703984, guid: 0a871c20cc9710942bd9649f3d7cc555, type: 3}
+  m_PrefabInstance: {fileID: 3043996431084198949}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1420280377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420280372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c6eb7b8769514c4fb8edee87f5b0cab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Ev_OnSuccesParry:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 874942918}
+        m_TargetAssemblyTypeName: PlayerManager, Project.Gameplay
+        m_MethodName: SuccesParry
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1431009592
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,6 +594,18 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3043996429794237233, guid: 0a871c20cc9710942bd9649f3d7cc555, type: 3}
+      propertyPath: m_Height
+      value: 2.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043996429794237233, guid: 0a871c20cc9710942bd9649f3d7cc555, type: 3}
+      propertyPath: m_Radius
+      value: 0.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043996429794237233, guid: 0a871c20cc9710942bd9649f3d7cc555, type: 3}
+      propertyPath: m_Center.x
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 3043996429794237236, guid: 0a871c20cc9710942bd9649f3d7cc555, type: 3}
       propertyPath: Wp_WeaponSO
       value: 
@@ -554,13 +615,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 125322376}
     - target: {fileID: 3043996429794237236, guid: 0a871c20cc9710942bd9649f3d7cc555, type: 3}
+      propertyPath: F_TimeDelayHealthBar
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043996429794237236, guid: 0a871c20cc9710942bd9649f3d7cc555, type: 3}
       propertyPath: MR_PlayerMeshRenderer
       value: 
       objectReference: {fileID: 125322377}
     - target: {fileID: 3043996429794237236, guid: 0a871c20cc9710942bd9649f3d7cc555, type: 3}
+      propertyPath: F_AmountDelayHealthBar
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043996429794237236, guid: 0a871c20cc9710942bd9649f3d7cc555, type: 3}
       propertyPath: MR_PlayerMeshRenderer.Array.data[0]
       value: 
       objectReference: {fileID: 125322377}
+    - target: {fileID: 3043996429794237238, guid: 0a871c20cc9710942bd9649f3d7cc555, type: 3}
+      propertyPath: Rb_PlayerRigidBody
+      value: 
+      objectReference: {fileID: 874942922}
     - target: {fileID: 3043996430130442935, guid: 0a871c20cc9710942bd9649f3d7cc555, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -588,6 +661,14 @@ PrefabInstance:
     - target: {fileID: 3043996430329312297, guid: 0a871c20cc9710942bd9649f3d7cc555, type: 3}
       propertyPath: m_LookAt
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043996431038703984, guid: 0a871c20cc9710942bd9649f3d7cc555, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043996431038703984, guid: 0a871c20cc9710942bd9649f3d7cc555, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3043996431182831719, guid: 0a871c20cc9710942bd9649f3d7cc555, type: 3}
       propertyPath: m_LocalPosition.x

@@ -35,6 +35,7 @@ public class PlayerManager : MonoBehaviour
     [FoldoutGroup("Player Stats"),ShowInInspector, ReadOnly]private bool B_CanHeal = true;
     [FoldoutGroup("Player Stats"),Title("Parry", titleAlignment: TitleAlignments.Centered)] 
     [FoldoutGroup("Player Stats")]public float F_ParryTime;
+    [FoldoutGroup("Player Stats")]public float F_ImprovSpeed;
     [FoldoutGroup("Player Stats")]public float F_ParryDuration;
     [FoldoutGroup("Player Stats")]public float F_ParryCD;
     [FoldoutGroup("Player Stats"),ShowInInspector, ReadOnly]private bool B_CanParry = true;
@@ -69,9 +70,11 @@ public class PlayerManager : MonoBehaviour
     
     #endregion
     #region ----------------------GUI----------------------------
-    [FoldoutGroup("GUI")][SerializeField] private Slider Sl_LifeBar;
-    [FoldoutGroup("GUI")][SerializeField] private RectTransform Rt_LifeBar;
+    [FoldoutGroup("GUI")][SerializeField] private Image Im_LifeBar;
+    [FoldoutGroup("GUI")][SerializeField] private Image Im_DelayLifeBar;
     [FoldoutGroup("GUI")][SerializeField] private TMP_Text Tx_Heals;
+    [FoldoutGroup("GUI")] [SerializeField] private float F_TimeDelayHealthBar;
+    [FoldoutGroup("GUI")] [SerializeField] private float F_AmountDelayHealthBar;
     #endregion
     
     #region -------------------Other References-----------------
@@ -148,6 +151,7 @@ public class PlayerManager : MonoBehaviour
     void HealthCheck(int i) //en cada cambio del valor de vida, comprueba que no supere la vida maxima y si la vida baja a/o 0, la setea en cero y llama al metodo de muerte
     {
         _actHealth = i;
+        Debug.Log(_actHealth);
         if (_actHealth > I_MaxHealth)
             _actHealth = I_MaxHealth;
         else if (_actHealth <= 0)
@@ -203,6 +207,12 @@ public class PlayerManager : MonoBehaviour
         I_ActHealth = I_MaxHealth;
         I_ActHeals = I_MaxHeals;
         UpdateHud();
+        Im_DelayLifeBar.fillAmount = Im_LifeBar.fillAmount;
+    }
+
+    float MapValues(float value, float from1, float to1, float from2, float to2)
+    {
+        return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
     }
     
     #endregion
@@ -265,7 +275,9 @@ public class PlayerManager : MonoBehaviour
         I_ActHealth -= i;
         StartCoroutine(Invencibility(0.3f));
         UpdateHud();
-        
+        StopCoroutine(DelayHealthBar());
+        StartCoroutine(DelayHealthBar());
+
     }
 
     void SelfDmg(InputAction.CallbackContext call) //Input de self damage
@@ -291,20 +303,37 @@ public class PlayerManager : MonoBehaviour
 
     public void UpdateHud() //Actualizar la informacion del HUD
     {
-        Sl_LifeBar.maxValue = I_MaxHealth;
-        Sl_LifeBar.value = I_ActHealth;
-        Rt_LifeBar.sizeDelta = new Vector2(HealthBarMap(I_MaxHealth), Rt_LifeBar.sizeDelta.y);
+
+        Im_LifeBar.fillAmount = HealthBarFillMap(I_ActHealth);
+        Im_LifeBar.rectTransform.sizeDelta =new Vector2(HealthBarSizeMap(I_MaxHealth), Im_LifeBar.rectTransform.sizeDelta.y);
         Tx_Heals.text = I_ActHeals.ToString();
         
 
     }
 
-    int HealthBarMap(int value)//Actualizar la barra de vida
+    float HealthBarFillMap(int health)
     {
-        return (value - 100) * (1250 - 300) / (1382 - 100) + 300;
+        return MapValues(health, 0, I_MaxHealth, 0, 1);
     }
-   
 
+    int HealthBarSizeMap(int value)//Actualizar tamano de la barra de vida
+    {
+        return (int)MapValues(value, 100, 1382, 300, 1250);
+    }
+
+    IEnumerator DelayHealthBar()
+    {
+        yield return new WaitForSeconds(1);
+        while (Im_LifeBar.fillAmount < Im_DelayLifeBar.fillAmount)
+        {
+            Im_DelayLifeBar.fillAmount -= F_AmountDelayHealthBar;
+            yield return new WaitForSeconds(F_TimeDelayHealthBar);
+        }
+        if (Im_DelayLifeBar.fillAmount < Im_LifeBar.fillAmount)
+            Im_DelayLifeBar.fillAmount = Im_LifeBar.fillAmount;
+    }
+    
+    
     #endregion
 
     #region Healling
@@ -344,9 +373,18 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void SuccesParry()//Control de lograr el parry TODO:Terminar el sistema de parry
+    public void SuccesParry()//Control de lograr el parry 
     {
+        //TODO:Parry Sound
         StartCoroutine(Invencibility(F_ParryDuration));
+        StartCoroutine(ParryVel(F_ParryDuration));
+    }
+
+    IEnumerator ParryVel(float t)
+    {
+        InputController.current.F_Velocity += F_ImprovSpeed;
+        yield return new WaitForSeconds(t);
+        InputController.current.F_Velocity -= F_ImprovSpeed;
     }
 
     IEnumerator ParryCD()//Delay para hacer parry
