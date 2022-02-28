@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
@@ -72,8 +73,9 @@ public class PlayerManager : MonoBehaviour
     #region ----------------------GUI----------------------------
     [FoldoutGroup("GUI")][SerializeField] private Image Im_LifeBar;
     [FoldoutGroup("GUI")][SerializeField] private Image Im_DelayLifeBar;
+    [FoldoutGroup("GUI")][SerializeField] private Image Im_HealLifeBar;
     [FoldoutGroup("GUI")][SerializeField] private TMP_Text Tx_Heals;
-    [FoldoutGroup("GUI")] [SerializeField] private float F_TimeDelayHealthBar;
+    [FoldoutGroup("GUI")] [SerializeField] private float F_LerpTimeHealthBar;
     [FoldoutGroup("GUI")] [SerializeField] private float F_AmountDelayHealthBar;
     #endregion
     
@@ -196,7 +198,7 @@ public class PlayerManager : MonoBehaviour
         {
             B_CanSufferDmg = false;
             ChangeMaterialsTransparency(0.3f);
-            yield return new WaitForSeconds(t);
+            yield return ScriptsTools.GetWait(t);
             ChangeMaterialsTransparency(1f);
             B_CanSufferDmg = true;
         }
@@ -209,11 +211,7 @@ public class PlayerManager : MonoBehaviour
         UpdateHud();
         Im_DelayLifeBar.fillAmount = Im_LifeBar.fillAmount;
     }
-
-    float MapValues(float value, float from1, float to1, float from2, float to2)
-    {
-        return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
-    }
+    
     
     #endregion
     
@@ -252,7 +250,7 @@ public class PlayerManager : MonoBehaviour
 
     IEnumerator ShootDelay() //Delay entre cada disparo
     {
-        yield return new WaitForSeconds(F_ShootDelay);
+        yield return ScriptsTools.GetWait(F_ShootDelay);
         B_CanShoot = true;
     }
     
@@ -293,7 +291,7 @@ public class PlayerManager : MonoBehaviour
 
     IEnumerator SelfDmgCD()// Corutina delay para SelfDamage
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return ScriptsTools.GetWait(0.2f);
         B_CanSelfDamage = true;
     }
 
@@ -313,22 +311,23 @@ public class PlayerManager : MonoBehaviour
 
     float HealthBarFillMap(int health)
     {
-        return MapValues(health, 0, I_MaxHealth, 0, 1);
+        return ScriptsTools.MapValues(health, 0, I_MaxHealth, 0, 1);
     }
 
     int HealthBarSizeMap(int value)//Actualizar tamano de la barra de vida
     {
-        return (int)MapValues(value, 100, 1382, 300, 1250);
+        return (int)ScriptsTools.MapValues(value, 100, 1382, 300, 1250);
     }
 
     IEnumerator DelayHealthBar()
     {
-        yield return new WaitForSeconds(1);
+        yield return ScriptsTools.GetWait(1);
         while (Im_LifeBar.fillAmount < Im_DelayLifeBar.fillAmount)
         {
             Im_DelayLifeBar.fillAmount -= F_AmountDelayHealthBar;
-            yield return new WaitForSeconds(F_TimeDelayHealthBar);
+            yield return ScriptsTools.GetWait(F_LerpTimeHealthBar);
         }
+
         if (Im_DelayLifeBar.fillAmount < Im_LifeBar.fillAmount)
             Im_DelayLifeBar.fillAmount = Im_LifeBar.fillAmount;
     }
@@ -354,7 +353,7 @@ public class PlayerManager : MonoBehaviour
 
     IEnumerator HealCD()//Delay para curarse
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return ScriptsTools.GetWait(0.5f);
         B_CanHeal = true;
     }
 
@@ -383,20 +382,20 @@ public class PlayerManager : MonoBehaviour
     IEnumerator ParryVel(float t)
     {
         InputController.current.F_Velocity += F_ImprovSpeed;
-        yield return new WaitForSeconds(t);
+        yield return ScriptsTools.GetWait(t);
         InputController.current.F_Velocity -= F_ImprovSpeed;
     }
 
     IEnumerator ParryCD()//Delay para hacer parry
     {
-        yield return new WaitForSeconds(F_ParryCD);
+        yield return ScriptsTools.GetWait(F_ParryCD);
         B_CanParry = true;
     }
 
     IEnumerator ActiveParry() //Activar objeto de trigger de parry
     {
         G_ParryArea.SetActive(true);
-        yield return new WaitForSeconds(F_ParryTime);
+        yield return ScriptsTools.GetWait(F_ParryTime);
         G_ParryArea.SetActive(false);
     }
     

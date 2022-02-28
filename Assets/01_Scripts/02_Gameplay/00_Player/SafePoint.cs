@@ -64,7 +64,7 @@ public class SafePoint : MonoBehaviour
 
     IEnumerator OpenUpgradeMenu(float t)//corutina middlepoint para anadir delay a la apertura de menu
     {
-        yield return new WaitForSeconds(t);
+        yield return ScriptsTools.GetWait(t);
         UpgradesSystem.current.OpenUpgradeMenu();
         Ev_OnEnterSafePoint.Invoke();
     }

@@ -6,7 +6,10 @@ using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
-    [SerializeField] private Slider Sl_HealthBar;
+    [SerializeField]private Image Im_LifeBar;
+    [SerializeField] private Image Im_DelayBar;
+    [SerializeField] private float F_AmountDelayBar;
+    [SerializeField] private float F_DurationDelayBar;
     [SerializeField] private int I_MaxHealth;
     [SerializeField] private int I_ActHealth;
     [SerializeField] private GameObject G_EnemyParent;
@@ -15,8 +18,8 @@ public class EnemyHealth : MonoBehaviour
 
     private void OnEnable()
     {
-        Sl_HealthBar.maxValue = I_MaxHealth;
-        Sl_HealthBar.value = I_MaxHealth;
+        Im_LifeBar.fillAmount = 1;
+        Im_DelayBar.fillAmount = 1;
         I_ActHealth = I_MaxHealth;
     }
 
@@ -32,7 +35,8 @@ public class EnemyHealth : MonoBehaviour
     void ApplyDamage()
     {
         I_ActHealth -= PlayerManager.current.I_ActDamage;
-        Sl_HealthBar.value = I_ActHealth;
+        Im_LifeBar.fillAmount = ScriptsTools.MapValues(I_ActHealth, 0, I_MaxHealth, 0, 1);
+        StartCoroutine(DelayBar());
         if (I_ActHealth <= 0)
         {
             Death();
@@ -46,4 +50,19 @@ public class EnemyHealth : MonoBehaviour
         UpgradesSystem.current.GetPoints(I_PointsToGive);
         G_EnemyParent.SetActive(false);
     }
+
+    IEnumerator DelayBar()
+    {
+        yield return ScriptsTools.GetWait(0.2f);
+        while (Im_LifeBar.fillAmount < Im_DelayBar.fillAmount)
+        {
+            Im_DelayBar.fillAmount -= F_AmountDelayBar;
+            yield return ScriptsTools.GetWait(F_DurationDelayBar);
+        }
+
+        if (Im_DelayBar.fillAmount < Im_LifeBar.fillAmount)
+            Im_DelayBar.fillAmount = Im_LifeBar.fillAmount;
+    }
+    
+
 }
