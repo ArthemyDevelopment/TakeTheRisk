@@ -4,7 +4,8 @@ public enum ScenesIndex
     LoadScene = 1,
     Menu = 2,
     GameOptions = 3,
-    Level = 4
+    GameLevel = 4,
+    TutorialLevel = 5
     
 }
 

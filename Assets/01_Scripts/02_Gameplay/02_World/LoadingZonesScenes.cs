@@ -16,9 +16,13 @@ public class LoadingZonesScenes : MonoBehaviour
         {
             LoadZone();
             LoadingZonesManager.current.SetZone(this);
-            foreach (LoadingZonesScenes s in ZonesToLoad)
+            if (ZonesToLoad != null)
             {
-                s.LoadZone();
+                foreach (LoadingZonesScenes s in ZonesToLoad)
+                {
+                    s.LoadZone();
+                }
+                
             }
             UnLoadZones();
             
@@ -31,6 +35,7 @@ public class LoadingZonesScenes : MonoBehaviour
         {
             B_isLoaded = true;
             SceneManager.LoadSceneAsync((int)Zone, LoadSceneMode.Additive);
+            Debug.Log("Loaded Zone" + Zone);
         }
     }
 

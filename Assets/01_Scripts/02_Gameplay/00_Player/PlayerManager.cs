@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 [DefaultExecutionOrder(-1)]
 public class PlayerManager : MonoBehaviour
@@ -244,6 +245,17 @@ public class PlayerManager : MonoBehaviour
 
     public void StoreBullet(GameObject g) //Regresa balas a la pool
     {
+        if (g.scene.buildIndex != (int)ScenesIndex.GameLevel)
+        {
+            Scene temp = new Scene();
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                if (SceneManager.GetSceneAt(i).buildIndex == (int)ScenesIndex.GameLevel)
+                    temp = SceneManager.GetSceneAt(i);
+            }
+            
+            SceneManager.MoveGameObjectToScene(g,temp);
+        }
         g.SetActive(false);
         Q_BulletPool.Enqueue(g);
     }

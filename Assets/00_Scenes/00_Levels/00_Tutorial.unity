@@ -2591,77 +2591,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!1 &544410329
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 544410333}
-  - component: {fileID: 544410332}
-  - component: {fileID: 544410331}
-  - component: {fileID: 544410330}
-  m_Layer: 0
-  m_Name: Plane_01
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
-  m_IsActive: 1
---- !u!114 &544410330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 544410329}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec06bdd223d9b0b409380418c7901e2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Zone: 0
-  ZonesToLoad: []
-  B_isLoaded: 0
---- !u!64 &544410331
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 544410329}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -462981019419857548, guid: c8841770b9f4d364ca7f0ab023155ca6, type: 3}
---- !u!33 &544410332
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 544410329}
-  m_Mesh: {fileID: -462981019419857548, guid: c8841770b9f4d364ca7f0ab023155ca6, type: 3}
---- !u!4 &544410333
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 544410329}
-  m_LocalRotation: {x: -0.00000041093176, y: 0.7071067, z: 0.7071068, w: 0.0000004109317}
-  m_LocalPosition: {x: 1.1528492, y: 0, z: 0.27609253}
-  m_LocalScale: {x: 800, y: 799.9999, z: 799.9999}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &568902795
 GameObject:
   m_ObjectHideFlags: 0
@@ -7760,6 +7689,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450652820581699}
+  - component: {fileID: 919132148833941498}
   m_Layer: 0
   m_Name: TutorialLayout
   m_TagString: Untagged
@@ -7767,6 +7697,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &919132148833941498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148833941497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b14af8f42b6cd4dacf5b68e460beee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  I_StartingPoolSize: 15
+  G_BulletPrefab: {fileID: 3969703970510426683, guid: 8f42b9a319e2e8847aebdd9d3e095afe, type: 3}
 --- !u!23 &1305037034074646642
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7821,6 +7765,7 @@ GameObject:
   - component: {fileID: 4876933053218690207}
   - component: {fileID: 1305037034074646642}
   - component: {fileID: 427168327}
+  - component: {fileID: 4931218027007094429}
   - component: {fileID: 427168331}
   m_Layer: 0
   m_Name: Plane
@@ -7868,6 +7813,20 @@ Transform:
   m_Father: {fileID: 543450652820581699}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &4931218027007094429
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2193423313649735634}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -462981019419857548, guid: c8841770b9f4d364ca7f0ab023155ca6, type: 3}
 --- !u!1001 &5392424031334304603
 PrefabInstance:
   m_ObjectHideFlags: 0

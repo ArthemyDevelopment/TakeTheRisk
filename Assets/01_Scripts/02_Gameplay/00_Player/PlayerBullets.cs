@@ -30,4 +30,9 @@ public class PlayerBullets : MonoBehaviour
             PlayerManager.current.StoreBullet(this.gameObject);
         }
     }
+
+    private void OnDestroy()
+    {
+        Debug.Log("Player Bullet Destroyed");
+    }
 }

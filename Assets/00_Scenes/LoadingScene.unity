@@ -203,7 +203,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!224 &149334841
 RectTransform:
@@ -464,7 +464,6 @@ GameObject:
   - component: {fileID: 1373576567}
   - component: {fileID: 1373576570}
   - component: {fileID: 1373576569}
-  - component: {fileID: 1373576568}
   m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
@@ -492,26 +491,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1373576568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1373576566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 197037d576b78694aa0b2e078809f643, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  manualRefresh: 0
-  anchorRect:
-    serializedVersion: 2
-    x: 8
-    y: 78.78641
-    width: 16
-    height: 16
-  anchorVector: {x: 0, y: 0}
 --- !u!114 &1373576569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,7 +615,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1745993435}
-  - component: {fileID: 1745993436}
   - component: {fileID: 1745993437}
   m_Layer: 5
   m_Name: LoadingBar
@@ -662,31 +640,11 @@ RectTransform:
   m_Father: {fileID: 1594941752}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.12057185, y: 0.45980257}
-  m_AnchorMax: {x: 0.879428, y: 0.54019743}
-  m_AnchoredPosition: {x: 0, y: 269.99997}
-  m_SizeDelta: {x: -0.00012207031, y: 43.373184}
+  m_AnchorMin: {x: 0.12057187, y: 0.9196421}
+  m_AnchorMax: {x: 0.87942785, y: 1.0803577}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -0.000061035156}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1745993436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745993434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 197037d576b78694aa0b2e078809f643, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  manualRefresh: 0
-  anchorRect:
-    serializedVersion: 2
-    x: 959.9999
-    y: 539.99994
-    width: 1457.0038
-    height: 86.78641
-  anchorVector: {x: 0, y: 0}
 --- !u!114 &1745993437
 MonoBehaviour:
   m_ObjectHideFlags: 0

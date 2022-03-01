@@ -32,4 +32,9 @@ public class EnemyBullet : MonoBehaviour
             BulletPool.current.StoreBullet(this.gameObject);
         }
     }
+
+    private void OnDestroy()
+    {
+        Debug.Log("Destroyed Bullet");
+    }
 }
